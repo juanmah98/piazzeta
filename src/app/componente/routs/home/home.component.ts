@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
     console.log(this.registerForm.value.mesa);
 
    
-      this.pedido = this.wtsp + '&text=_*MESA*_' + this.registerForm.value.mesa + '%0A*Pedido:*%0A' + this.registerForm.value.pedido ;
+      this.pedido = this.wtsp + '&text='+ '*Mesa:*%0A' + this.registerForm.value.mesa + '%0A*Pedido:*%0A' + this.registerForm.value.pedido ;
      
       window.location.href = this.pedido ; 
     
@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
   }
 
   onCocina(){
-    this.pedido2 = this.wtsp2 + '&text=_*MESA*_' + this.registerForm.value.mesa + '%0A*Pedido:*%0A' + this.registerForm.value.pedido ;
+    this.pedido2 = this.wtsp2 + '&text='+ '*Mesa:*%0A' + this.registerForm.value.mesa + '%0A*Pedido:*%0A' + this.registerForm.value.pedido ;
     window.location.href = this.pedido2 ; 
     this.onReset();
    /*  this.onReset(); */

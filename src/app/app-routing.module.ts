@@ -7,8 +7,7 @@ import { PrincipalComponent } from './componente/routs/principal/principal.compo
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},  
-  {path: '', component: PrincipalComponent},  
-  {path: '', component: PrincipalComponent},  
+  {path: '', component: HomeComponent},  
   {path: 'cocina', component: CocinaComponent},  
   {path: 'caja', component: MostradorComponent},  
 ];

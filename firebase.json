@@ -1,7 +1,8 @@
 {
   "hosting": [
     {
-      "public": "public",
+      "target": "pizzeta",
+      "public": "dist/pizzeta",
       "ignore": [
         "firebase.json",
         "**/.*",

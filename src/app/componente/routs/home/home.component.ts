@@ -1,5 +1,9 @@
+import { Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+
+
+import { PedidosService } from 'src/app/services/pedidos.service';
 
 @Component({
   selector: 'app-home',
@@ -13,44 +17,52 @@ export class HomeComponent implements OnInit {
   wtsp2 = 'https://api.whatsapp.com/send?phone=603686778';
   pedido = "";
   pedido2 = "";
+
   
   registerForm: any;
 
-  constructor(private formBuilder: FormBuilder) {
+
+  constructor(private formBuilder: FormBuilder, private placesService: PedidosService) {
 
     this.registerForm = this.formBuilder.group(
       {
-       
+        id: [""],  
         mesa: [""],      
         pedido:[""],
+       
+     
       },
       
     )
   
    }
   ngOnInit(): void {
+   
   }
 
-  onSumbit(){
-    console.log(this.registerForm.value.mesa);
+ async onSumbit(){
 
-   
-      this.pedido = this.wtsp + '&text='+ '*Mesa:*%0A' + this.registerForm.value.mesa + '%0A*Pedido:*%0A' + this.registerForm.value.pedido ;
+  
+    console.log(this.registerForm.value);
+
+      /* this.pedido = this.wtsp + '&text='+ '*Mesa:*%0A' + this.registerForm.value.mesa + '%0A*Pedido:*%0A' + this.registerForm.value.pedido ;
      
-      window.location.href = this.pedido ; 
-    
-      
+      window.location.href = this.pedido ;  */
+    if(this.registerForm.value.mesa != "" && this.registerForm.value.pedido != ""){
 
-    /* window.location.href = pedido; */
+      const respnse = await this.placesService.addPedido(this.registerForm.value);
+      console.log(respnse);
+      this.onReset();
+      window.location.href = "/home" ;
+    }
+   
+  
        
   }
 
-  onCocina(){
-    this.pedido2 = this.wtsp2 + '&text='+ '*Mesa:*%0A' + this.registerForm.value.mesa + '%0A*Pedido:*%0A' + this.registerForm.value.pedido ;
-    window.location.href = this.pedido2 ; 
-    this.onReset();
-   /*  this.onReset(); */
-  }
+
+
+
 
   onReset(){
     this.registerForm.reset();

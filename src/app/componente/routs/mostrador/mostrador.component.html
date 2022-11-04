@@ -1,0 +1,24 @@
+<body class="mt-3">
+    <div class="row container-fluid ">
+        <p class="fs-4 fw-bold text-center">Pedidos Listos</p>
+        <div class="col-6 pb-3"*ngFor="let pediListo of pediListo" >
+            <div class="card text-center bg-primary" style="border-color: rgb(0, 166, 255);">
+                <p class="fw-bold text-light bg-primary">Mesa: {{pediListo.mesa}}</p>
+                <p class="text-light">{{pediListo.pedido}}</p>
+                <button class="btn btn-light mx-2 mb-1" (click)="onClickDeleteListo(pediListo)">Cobrar</button>
+            </div>   
+        </div>
+
+        <p class="fs-4 fw-bold pt-3 text-center">Cocina</p>
+        <div class="col-6 pb-3"*ngFor="let pedi of pedi" >
+            <div class="card text-center" style="border-color: rgb(0, 166, 255);">
+                <p class="fw-bold text-light bg-primary">Mesa: {{pedi.mesa}}</p>
+                <p>{{pedi.pedido}}</p>
+                <button class="btn btn-primary mx-2 mb-1" (click)="onClickListo(pedi)">Listo</button>
+                <button class="btn btn-primary mx-1 mb-1" (click)="onClickDelete(pedi)">Eliminar</button>
+            </div>   
+        </div>
+
+       
+    </div>
+</body>

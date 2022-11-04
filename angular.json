@@ -94,6 +94,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "pizzeta:build:production",
+            "firebaseProject": "piazzeta-c2f38",
+            "firebaseHostingSite": "piazzeta-c2f38"
+          }
         }
       }
     }

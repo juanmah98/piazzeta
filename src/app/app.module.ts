@@ -6,6 +6,10 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RoutsModule } from './componente/routs/routs.module';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { LayoutModule } from './componente/layout/layout.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,10 @@ import { RoutsModule } from './componente/routs/routs.module';
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
-    RoutsModule
+    RoutsModule,
+    LayoutModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore())
 
   ],
   providers: [],

@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "piazzeta-c2f38"
+  },
+  "targets": {
+    "piazzeta-c2f38": {
+      "hosting": {
+        "pizzeta": [
+          "piazzeta-c2f38"
+        ]
+      }
+    }
   }
 }

@@ -4,12 +4,13 @@
 //
 //   const pedidos = Convert.toPedidos(json);
 
-import { Time } from "@angular/common";
+
 
 export interface Pedidos {
     id: string;
     mesa:   number;
     pedido: string;
+    time: any
 
 }
 

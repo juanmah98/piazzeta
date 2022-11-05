@@ -15,11 +15,13 @@ export class CocinaComponent implements OnInit {
     this.pedidosServices.getPedidos().subscribe(pedidos => {
        /* console.log(pedidos);  */
       
-       this.pedi = pedidos;
+       this.pedi = pedidos.sort((a, b) => {
+        return a.time - b.time;
+      });
      
 
     
-      console.log("Pedido: ", pedidos);
+      console.log("Pedido: ", this.pedi);
      
       
     })

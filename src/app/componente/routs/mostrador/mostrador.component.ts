@@ -17,13 +17,17 @@ export class MostradorComponent implements OnInit {
   ngOnInit(): void {
     this.pedidosServices.getPedidos().subscribe(pedidos => {
       console.log(pedidos);
-      this.pedi = pedidos;
+      this.pedi = pedidos.sort((a, b) => {
+        return a.time - b.time;
+      });
      
     })
 
     this.pedidosServices.getPedidosListo().subscribe(pedidosListos => {
       console.log(pedidosListos);
-      this.pediListo = pedidosListos;
+      this.pediListo = pedidosListos.sort((a, b) => {
+        return a.time - b.time;
+      });
      
     })
   }

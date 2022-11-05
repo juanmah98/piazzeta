@@ -1,6 +1,8 @@
 import { Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Firestore } from '@angular/fire/firestore';
 import { FormBuilder } from '@angular/forms';
+import { serverTimestamp } from '@firebase/firestore';
 
 
 import { PedidosService } from 'src/app/services/pedidos.service';
@@ -29,6 +31,7 @@ export class HomeComponent implements OnInit {
         id: [""],  
         mesa: [""],      
         pedido:[""],
+        time: [serverTimestamp()]
        
      
       },
@@ -37,6 +40,7 @@ export class HomeComponent implements OnInit {
   
    }
   ngOnInit(): void {
+    
    
   }
 

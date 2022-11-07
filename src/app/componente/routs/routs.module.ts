@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrincipalComponent } from './principal/principal.component';
 import { CocinaComponent } from './cocina/cocina.component';
 import { MostradorComponent } from './mostrador/mostrador.component';
+import { VentasComponent } from './ventas/ventas.component';
 
 
 
@@ -13,7 +14,8 @@ import { MostradorComponent } from './mostrador/mostrador.component';
     HomeComponent,
     PrincipalComponent,
     CocinaComponent,
-    MostradorComponent
+    MostradorComponent,
+    VentasComponent
   ],
   imports: [
     CommonModule,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder } from '@angular/forms';
 import { Pedidos } from 'src/app/interfaces/pedido';
+import { Save } from 'src/app/interfaces/save';
 import { PedidosService } from 'src/app/services/pedidos.service';
 
 @Component({
@@ -12,6 +13,8 @@ import { PedidosService } from 'src/app/services/pedidos.service';
 export class MostradorComponent implements OnInit {
 
   registerForm: any;
+  dia:any =  new Date().toLocaleDateString()   ;
+ 
 
 
   constructor(private formBuilder: FormBuilder,private pedidosServices: PedidosService) { 
@@ -21,8 +24,6 @@ export class MostradorComponent implements OnInit {
         id: [""],  
         mesa: [""],      
         pedido:[""],     
-       
-     
       },
       
     )
@@ -38,6 +39,14 @@ export class MostradorComponent implements OnInit {
     time: undefined
   };
 
+  p: Save = {
+    id: '',
+    mesa: 0,
+    pedido: '',
+    time: undefined,
+    day: ''
+  };
+
   ngOnInit(): void {
     this.pedidosServices.getPedidos().subscribe(pedidos => {
       console.log(pedidos);
@@ -47,6 +56,7 @@ export class MostradorComponent implements OnInit {
      
     })
 
+   
     this.pedidosServices.getPedidosListo().subscribe(pedidosListos => {
       console.log(pedidosListos);
       this.pediListo = pedidosListos.sort((a, b) => {
@@ -107,10 +117,22 @@ async onClickListo(pedido:Pedidos){
 }
 
 async onClickDeleteListo(pedido:Pedidos){
+  
+  this.p.id = "";
+  this.p.mesa = pedido.mesa;
+  this.p.pedido = pedido.pedido;
+  this.p.time = pedido.time;
+  this.p.day = this.dia;
 
+  
+
+   this.pedidosServices.addTotalDia(this.p); 
   const response = await this.pedidosServices.deletePedidoListo(pedido);
   console.log(response);
+  console.log(this.dia + "pedidos: "+ this.p)
 
 }
+
+
 
 }

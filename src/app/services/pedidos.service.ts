@@ -3,6 +3,7 @@ import { Firestore, addDoc, collectionData, doc, deleteDoc, updateDoc } from '@a
 import { collection } from '@firebase/firestore';
 import { Observable } from 'rxjs';
 import { Pedidos } from '../interfaces/pedido';
+import { Save } from '../interfaces/save';
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +58,16 @@ export class PedidosService {
       `pedidosListos/${pedido.id}`      
     );
     return updateDoc(pokemonDocumentReference, { ...pedido });
+  }
+
+  addTotalDia(pedido: Save){
+    const pedidoRef = collection(this.firestore,`${pedido.day.replace(/\//g, "")}`);
+    return addDoc(pedidoRef, pedido);
+  }
+
+  getTotalDia(pedido: String): Observable<Save[]>{
+    
+    const pedidoRef = collection(this.firestore, `${pedido}`);
+    return collectionData(pedidoRef, {idField: 'id'})  as Observable<Save[]>;
   }
 }

@@ -12,4 +12,17 @@ export class PrincipalComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  home(){
+    window.location.href = "/home"
+  }
+
+  cocina(){
+    window.location.href = "/cocina"
+  }
+
+  caja(){
+    window.location.href = "/caja"
+  }
+
+
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+
+import { FormBuilder } from '@angular/forms';
 import { Pedidos } from 'src/app/interfaces/pedido';
 import { PedidosService } from 'src/app/services/pedidos.service';
 
@@ -9,10 +11,32 @@ import { PedidosService } from 'src/app/services/pedidos.service';
 })
 export class MostradorComponent implements OnInit {
 
-  constructor(private pedidosServices: PedidosService) { }
+  registerForm: any;
+
+
+  constructor(private formBuilder: FormBuilder,private pedidosServices: PedidosService) { 
+
+    this.registerForm = this.formBuilder.group(
+      {
+        id: [""],  
+        mesa: [""],      
+        pedido:[""],     
+       
+     
+      },
+      
+    )
+  }
   pedi:Pedidos[] = [];
   pediListo:Pedidos[] = [];
-
+  textoDeInput = "";
+  textoDeMesa = 0;
+  pedidoEditar: Pedidos = {
+    id: '',
+    mesa: 0,
+    pedido: '',
+    time: undefined
+  };
 
   ngOnInit(): void {
     this.pedidosServices.getPedidos().subscribe(pedidos => {
@@ -37,6 +61,40 @@ export class MostradorComponent implements OnInit {
   const response = await this.pedidosServices.deletePedido(pedido);
   console.log(response);
 
+}
+
+async onEdit(){
+  
+ 
+  console.log(this.registerForm.value.id);  
+  this.pedidoEditar.mesa = this.registerForm.value.mesa;
+  this.pedidoEditar.pedido = this.registerForm.value.pedido;
+  
+  const response = await this.pedidosServices.editPedido(this.pedidoEditar);
+  console.log("Edit");
+  console.log("Pedido a editar: "+this.pedidoEditar.id)
+  console.log("Editado: "+response); 
+}
+
+async onEditListo(){
+  
+ 
+  console.log(this.registerForm.value.id);  
+  this.pedidoEditar.mesa = this.registerForm.value.mesa;
+  this.pedidoEditar.pedido = this.registerForm.value.pedido;
+  
+  const response = await this.pedidosServices.editPedidoListo(this.pedidoEditar);
+  console.log("Edit");
+  console.log("Pedido a editar: "+this.pedidoEditar.id)
+  console.log("Editado: "+response); 
+}
+
+editForm(pedido:Pedidos){
+  this.pedidoEditar = pedido;
+  this.textoDeInput=pedido.pedido;
+  this.textoDeMesa = pedido.mesa;
+  this.registerForm.value = pedido;
+  console.log("Pedido a editar: "+pedido.id)
 }
 
 

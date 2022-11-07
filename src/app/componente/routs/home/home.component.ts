@@ -45,10 +45,7 @@ export class HomeComponent implements OnInit {
   }
 
  async onSumbit(){
-
-  
     console.log(this.registerForm.value);
-
       /* this.pedido = this.wtsp + '&text='+ '*Mesa:*%0A' + this.registerForm.value.mesa + '%0A*Pedido:*%0A' + this.registerForm.value.pedido ;
      
       window.location.href = this.pedido ;  */
@@ -60,10 +57,7 @@ export class HomeComponent implements OnInit {
       window.location.href = "/home" ;
     }
    
-  
-       
   }
-
 
 
 

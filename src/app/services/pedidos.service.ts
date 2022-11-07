@@ -41,5 +41,21 @@ export class PedidosService {
     return deleteDoc(pedidoDocRef);
   }
 
+  editPedido(pedido: Pedidos) {
+    console.log("id Service: "+pedido.id)
+    const pokemonDocumentReference = doc(
+      this.firestore,
+      `pedidos/${pedido.id}`      
+    );
+    return updateDoc(pokemonDocumentReference, { ...pedido });
+  }
 
+  editPedidoListo(pedido: Pedidos) {
+    console.log("id Service: "+pedido.id)
+    const pokemonDocumentReference = doc(
+      this.firestore,
+      `pedidosListos/${pedido.id}`      
+    );
+    return updateDoc(pokemonDocumentReference, { ...pedido });
+  }
 }

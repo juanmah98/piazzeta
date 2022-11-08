@@ -68,7 +68,7 @@
 
         <p class="fs-4 fw-bold pt-3 text-center">Cocina</p>
         <div class="col-6 col-md-3  pb-3"*ngFor="let pedi of pedi" >
-            <div class="card text-center" style="border-color: rgb(0, 166, 255);">
+            <div class="card text-center" [ngClass]="{'edit': pedi.edit}" style="border-color: rgb(0, 166, 255);">
                 <p class="fw-bold text-light bg-primary">Mesa: {{pedi.mesa}}</p>
                 <p>{{pedi.pedido}}</p>
                 <button class="btn btn-primary mx-2 mb-1" (click)="onClickListo(pedi)">Listo <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-hourglass-split" viewBox="0 0 16 16">

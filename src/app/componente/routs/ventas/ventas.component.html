@@ -4,18 +4,18 @@
           
             <h1>{{dia}}</h1>
            
-            <div class="col-6-md col-8" >
+            <div class="col-md-8 col-12" >
               <div class="mb-2">
                 <input type="datetime" [(ngModel)]="fecha"> 
                
-                <button  (click)="time()" class="btn btn-dark mx-2">Cambiar</button>
+                <button  (click)="time()" class="btn btn-dark mx-2">Buscar</button>
 
               </div>
               
                 <table class="table table-dark" >
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
+                        <th scope="col" style="color: rgb(255, 213, 0);">#</th>
                         <th scope="col">Mesa</th>
                         <th scope="col">Pedido</th>
                        
@@ -23,7 +23,7 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let pedi of pedi, let id = index">
-                        <th scope="row" >{{id+1}}</th>
+                        <th scope="row" style="color: rgb(255, 213, 0);">{{id+1}}</th>
                         <td>{{pedi.mesa}}</td>
                         <td>{{pedi.pedido}}</td>                                                
                       </tr>

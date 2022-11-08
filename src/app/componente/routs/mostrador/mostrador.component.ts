@@ -36,7 +36,8 @@ export class MostradorComponent implements OnInit {
     id: '',
     mesa: 0,
     pedido: '',
-    time: undefined
+    time: undefined,
+    edit: false
   };
 
   p: Save = {
@@ -44,6 +45,7 @@ export class MostradorComponent implements OnInit {
     mesa: 0,
     pedido: '',
     time: undefined,
+    edit: false,
     day: ''
   };
 
@@ -79,6 +81,7 @@ async onEdit(){
   console.log(this.registerForm.value.id);  
   this.pedidoEditar.mesa = this.registerForm.value.mesa;
   this.pedidoEditar.pedido = this.registerForm.value.pedido;
+  this.pedidoEditar.edit = true;
   
   const response = await this.pedidosServices.editPedido(this.pedidoEditar);
   console.log("Edit");
@@ -92,6 +95,7 @@ async onEditListo(){
   console.log(this.registerForm.value.id);  
   this.pedidoEditar.mesa = this.registerForm.value.mesa;
   this.pedidoEditar.pedido = this.registerForm.value.pedido;
+  this.pedidoEditar.edit = true;
   
   const response = await this.pedidosServices.editPedidoListo(this.pedidoEditar);
   console.log("Edit");
@@ -123,6 +127,7 @@ async onClickDeleteListo(pedido:Pedidos){
   this.p.pedido = pedido.pedido;
   this.p.time = pedido.time;
   this.p.day = this.dia;
+  this.p.edit=pedido.edit;
 
   
 

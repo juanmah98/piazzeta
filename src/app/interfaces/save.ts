@@ -11,6 +11,7 @@ export interface Save {
     mesa:   number;
     pedido: string;
     time: any;
+    edit: boolean;
     day: string;
 
 }

@@ -10,7 +10,8 @@ export interface Pedidos {
     id: string;
     mesa:   number;
     pedido: string;
-    time: any
+    time: any;
+    edit: boolean;
 
 }
 

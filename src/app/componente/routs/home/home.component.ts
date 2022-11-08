@@ -31,7 +31,8 @@ export class HomeComponent implements OnInit {
         id: [""],  
         mesa: [""],      
         pedido:[""],
-        time: [serverTimestamp()]
+        time: [serverTimestamp()],
+        edit:[false]
        
      
       },

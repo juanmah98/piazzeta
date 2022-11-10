@@ -11,8 +11,11 @@ export class CocinaComponent implements OnInit {
 
   constructor(private pedidosServices: PedidosService) { }
   pedi:Pedidos[] = [];
+  email:string="";
   ngOnInit(): void {
-    this.pedidosServices.getPedidos().subscribe(pedidos => {
+    let log = sessionStorage.getItem("email") as string;
+    this.email=log;
+    this.pedidosServices.getPedidos(log).subscribe(pedidos => {
        /* console.log(pedidos);  */
       
        this.pedi = pedidos.sort((a, b) => {
@@ -27,9 +30,9 @@ export class CocinaComponent implements OnInit {
     })
   }
 
- async onClickDelete(pedido:Pedidos){
-  this.pedidosServices.addPedidoListo(pedido);
-  const response = await this.pedidosServices.deletePedido(pedido);
+ async onClickDelete(pedido:Pedidos){ 
+  this.pedidosServices.addPedidoListo(pedido, this.email);
+  const response = await this.pedidosServices.deletePedido(pedido,this.email);
   console.log(response);
 }
 

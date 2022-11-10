@@ -1,0 +1,26 @@
+.inicio{
+    box-shadow: -10px -10px 15px rgba(255, 255, 255, 0.789),
+            10px 10px 15px rgba(70,70,70,0.12);
+    color: rgb(65, 65, 65);
+    border-radius: 20px;
+    
+}
+
+.btn-inicio{
+    box-shadow: -10px -10px 15px rgba(255, 255, 255, 0.789),
+            10px 10px 15px rgba(70,70,70,0.12);
+    color: rgb(65, 65, 65);
+    border-radius: 10px;
+    
+}
+
+.btn-inicio:hover{
+     background-color: rgb(234, 234, 234);
+}
+
+
+
+.inicio-int{
+    box-shadow: inset -10px -10px 15px rgba(255, 255, 255, 0.5), 
+           inset 10px 10px 15px rgba(70, 70, 70, 0.12);
+}

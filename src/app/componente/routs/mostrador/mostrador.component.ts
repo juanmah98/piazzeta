@@ -49,8 +49,12 @@ export class MostradorComponent implements OnInit {
     day: ''
   };
 
+  email:string="";
+
   ngOnInit(): void {
-    this.pedidosServices.getPedidos().subscribe(pedidos => {
+    let log = sessionStorage.getItem("email") as string;
+    this.email=log;
+    this.pedidosServices.getPedidos(log).subscribe(pedidos => {
       console.log(pedidos);
       this.pedi = pedidos.sort((a, b) => {
         return a.time - b.time;
@@ -59,7 +63,7 @@ export class MostradorComponent implements OnInit {
     })
 
    
-    this.pedidosServices.getPedidosListo().subscribe(pedidosListos => {
+    this.pedidosServices.getPedidosListo(this.email).subscribe(pedidosListos => {
       console.log(pedidosListos);
       this.pediListo = pedidosListos.sort((a, b) => {
         return a.time - b.time;
@@ -70,7 +74,7 @@ export class MostradorComponent implements OnInit {
 
  async onClickDelete(pedido:Pedidos){
 
-  const response = await this.pedidosServices.deletePedido(pedido);
+  const response = await this.pedidosServices.deletePedido(pedido, this.email);
   console.log(response);
 
 }
@@ -83,7 +87,7 @@ async onEdit(){
   this.pedidoEditar.pedido = this.registerForm.value.pedido;
   this.pedidoEditar.edit = true;
   
-  const response = await this.pedidosServices.editPedido(this.pedidoEditar);
+  const response = await this.pedidosServices.editPedido(this.pedidoEditar, this.email);
   console.log("Edit");
   console.log("Pedido a editar: "+this.pedidoEditar.id)
   console.log("Editado: "+response); 
@@ -97,7 +101,7 @@ async onEditListo(){
   this.pedidoEditar.pedido = this.registerForm.value.pedido;
   this.pedidoEditar.edit = true;
   
-  const response = await this.pedidosServices.editPedidoListo(this.pedidoEditar);
+  const response = await this.pedidosServices.editPedidoListo(this.pedidoEditar, this.email);
   console.log("Edit");
   console.log("Pedido a editar: "+this.pedidoEditar.id)
   console.log("Editado: "+response); 
@@ -114,8 +118,8 @@ editForm(pedido:Pedidos){
 
 async onClickListo(pedido:Pedidos){
 
-  this.pedidosServices.addPedidoListo(pedido);
-  const response = await this.pedidosServices.deletePedido(pedido);
+  this.pedidosServices.addPedidoListo(pedido,this.email);
+  const response = await this.pedidosServices.deletePedido(pedido, this.email);
   console.log(response);
 
 }
@@ -131,8 +135,8 @@ async onClickDeleteListo(pedido:Pedidos){
 
   
 
-   this.pedidosServices.addTotalDia(this.p); 
-  const response = await this.pedidosServices.deletePedidoListo(pedido);
+   this.pedidosServices.addTotalDia(this.p, this.email); 
+  const response = await this.pedidosServices.deletePedidoListo(pedido, this.email);
   console.log(response);
   console.log(this.dia + "pedidos: "+ this.p)
 

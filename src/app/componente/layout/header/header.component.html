@@ -4,7 +4,7 @@
     <header>
        
         
-        <nav class="navbar bg-dark ">
+        <nav *ngIf="login=='1'" class="navbar bg-dark ">
             <div class="container-fluid " >
                 
                
@@ -33,6 +33,79 @@
                                 Venta
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="" rel="noopener noreferrer" class=" nav-item text-decoration-none text-light  fs-6 p-2 m-1" routerLink="/user" >
+                                Usuario
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="" (click)="salir()" rel="noopener noreferrer" class=" nav-item text-decoration-none text-light  fs-6 p-2 m-1">
+                                Salir
+                            </a>
+                        </li>
+
+
+
+    
+                       
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        
+
+        <nav  *ngIf="login!='1'" class="navbar bg-dark ">
+            <div class="container-fluid " >
+                
+               
+                <div class="navbar-content d-flex justify-content-end">
+                    
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a href="" rel="noopener noreferrer" class=" nav-item text-decoration-none text-light  fs-6 p-2 m-1" routerLink="/inicio" >
+                               Inicio
+                            </a>
+                        </li>    
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <nav *ngIf="login=='2'" class="navbar bg-dark ">
+            <div class="container-fluid " >
+                
+               
+                <div class="navbar-content d-flex justify-content-end">
+                    
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a href="" rel="noopener noreferrer" class=" nav-item text-decoration-none text-light  fs-6 p-2 m-1" routerLink="/home" >
+                               Camarero
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" rel="noopener noreferrer" class=" nav-item text-decoration-none text-light  fs-6 p-2 m-1"  routerLink="/cocina" >
+                                Cocina
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="" rel="noopener noreferrer" class=" nav-item text-decoration-none text-light  fs-6 p-2 m-1" routerLink="/caja" >
+                                Caja
+                            </a>
+                        </li>
+                        
+
+                        <li class="nav-item">
+                            <a href="" (click)="salir()" rel="noopener noreferrer" class=" nav-item text-decoration-none text-light  fs-6 p-2 m-1">
+                                Salir
+                            </a>
+                        </li>
+
+
 
     
                        

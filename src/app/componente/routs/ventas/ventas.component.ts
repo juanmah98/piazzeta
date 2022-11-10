@@ -15,11 +15,13 @@ export class VentasComponent implements OnInit {
   constructor(private pedidosServices: PedidosService) { }
   
   dia:any =  new Date().toLocaleDateString()   ;
-  
+  email:string = "";
   
   ngOnInit(): void {
+    let log = sessionStorage.getItem("email") as string;
+    this.email=log;
     
-    this.pedidosServices.getTotalDia(this.dia.replace(/\//g, "")).subscribe(pedidos => {
+    this.pedidosServices.getTotalDia(this.dia.replace(/\//g, ""), this.email).subscribe(pedidos => {
      
       this.pedi = pedidos.sort((a, b) => {
         return a.time - b.time;
@@ -33,7 +35,7 @@ export class VentasComponent implements OnInit {
 
   time(){
    
-    this.pedidosServices.getTotalDia(this.fecha).subscribe(pedidos => {
+    this.pedidosServices.getTotalDia(this.fecha, this.email).subscribe(pedidos => {
      
       this.pedi = pedidos.sort((a, b) => {
         return a.time - b.time;

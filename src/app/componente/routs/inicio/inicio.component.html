@@ -1,0 +1,50 @@
+<body class="btn-primary text-light pt-5 mt-1" style="background-color: rgb(225, 225, 225); font-family: Helvetica;">
+
+    <div class="container-fluid ">
+
+    <div class="row m-1" style="background-color: rgb(225, 225, 225);" >
+        <div class="col-md-2 col-12"></div>
+        <div class="col-md-4 col-12 p-2">
+        
+            <form  (ngSumbit)="onSumbit()" style="color: rgb(65, 65, 65);" [formGroup]="registerForm" id="form"  class=" shadow-md rounded px-8 mt-4 container-fluid ">
+                <p class="fs-4 fw-bold text-center">Ingrese su clave para operar</p>
+                <div class="" style="background-color: rgb(225, 225, 225);">
+                <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="id">
+                
+                </label>
+                <input
+                    class="form-control  inicio appearance-none cuadro border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    style="background-color: rgb(225, 225, 225);"  formControlName="id"  id="id" type="text" placeholder="Ingrese su clave" >
+            </div>    
+        
+            
+        
+            <div class="text-center pt-4" >
+                <button class="btn btn-inicio mx-2" _target (click)="onSumbit()">Entrar</button>
+                
+            </div>
+        
+            </form>
+        </div>
+
+        <div class="col-md-4  inicio bg-ligth p-4 text-center" >
+            <p class="fs-4 pt-2 fw-bold text-center">Login negocio</p>
+
+           <!--  <button class="btn btn-inicio" >Ingresar</button> -->
+
+           
+         <!--    <p class="fs-4 pt-3 fw-bold text-center">Nuevo usuario</p> -->
+
+            <button id="buttonDiv" class="btn btn-inicio" style="background-color: white;" >
+               
+    
+            </button> 
+            
+           
+        </div>
+
+
+    </div>
+    </div>
+  </body>
+  

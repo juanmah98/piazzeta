@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   wtsp2 = 'https://api.whatsapp.com/send?phone=603686778';
   pedido = "";
   pedido2 = "";
+  email: string ="";
 
   
   registerForm: any;
@@ -41,8 +42,8 @@ export class HomeComponent implements OnInit {
   
    }
   ngOnInit(): void {
-    
-   
+    let email = sessionStorage.getItem("email") as string;
+   this.email = email;
   }
 
  async onSumbit(){
@@ -52,7 +53,7 @@ export class HomeComponent implements OnInit {
       window.location.href = this.pedido ;  */
     if(this.registerForm.value.mesa != "" && this.registerForm.value.pedido != ""){
 
-      const respnse = await this.placesService.addPedido(this.registerForm.value);
+      const respnse = await this.placesService.addPedido(this.registerForm.value, this.email);
       console.log(respnse);
       this.onReset();
       window.location.href = "/home" ;

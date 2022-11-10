@@ -8,8 +8,21 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   constructor() { }
+  login: string = "0";
 
   ngOnInit(): void {
+    let log = sessionStorage.getItem("login") as string;
+   this.login = log;
+  }
+
+  salir(){
+    this.login="0";
+    sessionStorage.setItem("email","");
+    sessionStorage.setItem("name", "");
+    sessionStorage.setItem("picture", "");
+    sessionStorage.setItem("login", "");
+    document.location.href = "/inicio"   
+
   }
 
 }

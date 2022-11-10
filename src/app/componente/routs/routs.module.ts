@@ -6,6 +6,8 @@ import { PrincipalComponent } from './principal/principal.component';
 import { CocinaComponent } from './cocina/cocina.component';
 import { MostradorComponent } from './mostrador/mostrador.component';
 import { VentasComponent } from './ventas/ventas.component';
+import { InicioComponent } from './inicio/inicio.component';
+import { UserComponent } from './user/user.component';
 
 
 
@@ -15,7 +17,9 @@ import { VentasComponent } from './ventas/ventas.component';
     PrincipalComponent,
     CocinaComponent,
     MostradorComponent,
-    VentasComponent
+    VentasComponent,
+    InicioComponent,
+    UserComponent
   ],
   imports: [
     CommonModule,

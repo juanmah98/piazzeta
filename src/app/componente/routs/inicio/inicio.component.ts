@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Clave } from 'src/app/interfaces/claves';
+import { EmailStorage } from 'src/app/interfaces/email';
 import { PedidosService } from 'src/app/services/pedidos.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 declare var google: any;
@@ -13,6 +15,12 @@ export class InicioComponent implements OnInit {
 
   registerForm: any;
   public objetounico:any = {};
+  em:EmailStorage[] =[];
+  user:EmailStorage={
+    id: '',
+    email: ''
+  };
+  clavess:Clave[]=[];
 
   constructor(private formBuilder: FormBuilder, private userServices: UsuariosService) {
 
@@ -36,13 +44,19 @@ export class InicioComponent implements OnInit {
    }  
    ngOnInit(): void {
  
-     
+    this.login = "0";
+       sessionStorage.setItem("login", this.login);
+     this.userServices.getUser().subscribe(prod => {
+      console.log(prod);
+      this.em = prod;     
+    });
+      
     
        google.accounts.id.initialize({
          /* LOCAL */
-          client_id: '501716064015-c8od71c598jvqprag4vi88s2kkjr4sge.apps.googleusercontent.com', 
+           client_id: '501716064015-c8od71c598jvqprag4vi88s2kkjr4sge.apps.googleusercontent.com',  
          /*  */
-          /* client_id: '1064213116404-t6okm41beb23vk6pihfa6lu1nc01in44.apps.googleusercontent.com',   */
+          /*  client_id: '501716064015-ghs2q8lm72me0bk9784ukjphu5p49jnj.apps.googleusercontent.com',    */
          callback: this.handleCredentialResponse
        });
        google.accounts.id.renderButton(
@@ -76,27 +90,59 @@ export class InicioComponent implements OnInit {
         sessionStorage.setItem("name", this.objetounico.name);
         sessionStorage.setItem("picture", this.objetounico.picture);
         console.log(this.objetounico.email);
-         document.location.href = "/user"   
+      
+         document.location.href = "/user"     
+
+       /*  for (var i = 0; i < this.em.length; i++) {
+          console.log("DENTRO DEL FOR");
+          if (this.objetounico.email == this.em[i]) {
+            console.log("ES IGUAL");
+          }
+        } */
+        
+       
+
 
       
       
     
      }
+     console.log("Fin google btn");    
    }
  
  
    singin(){
+    this.user.email=this.objetounico.email;
      this.message = false;
      this.sendMessage();
    }
 
+
  async onSumbit(){
+ 
+ await this.userServices.getUser().subscribe(prod => {
    
- const a= this.userServices.getUsers().subscribe(prod => {
-    console.log(prod);
+    this.em = prod;     
+ 
+    for (var i = 0; i < this.em.length; i++) {
+
+     this.userServices.getId(prod[i].id).subscribe(clave => {
+       
+        this.clavess = clave;
+
+        if(this.clavess[0].clave == this.registerForm.value.id){
+          
+          sessionStorage.setItem("email", this.clavess[0].email);
+          this.login = "2";
+          sessionStorage.setItem("login", this.login);
+           document.location.href = "/home"     
+
+        }
+      });
+    }
+   
   });
-  console.log(a);
-   
+ 
   }
 
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder } from '@angular/forms';
+import { EmailStorage } from 'src/app/interfaces/email';
 import { Pedidos } from 'src/app/interfaces/pedido';
 import { Save } from 'src/app/interfaces/save';
 import { PedidosService } from 'src/app/services/pedidos.service';
@@ -49,12 +50,26 @@ export class MostradorComponent implements OnInit {
     day: ''
   };
 
+  em:EmailStorage={
+    id: '',
+    email: ''
+  };
+
+  user:EmailStorage={
+    id: '',
+    email: ''
+  };
+
+  id:string = "";
+
   email:string="";
 
   ngOnInit(): void {
     let log = sessionStorage.getItem("email") as string;
     this.email=log;
-    this.pedidosServices.getPedidos(log).subscribe(pedidos => {
+    let id = sessionStorage.getItem("idUser") as string;
+    this.id = id;
+    this.pedidosServices.getPedidos(id).subscribe(pedidos => {
       console.log(pedidos);
       this.pedi = pedidos.sort((a, b) => {
         return a.time - b.time;
@@ -63,7 +78,7 @@ export class MostradorComponent implements OnInit {
     })
 
    
-    this.pedidosServices.getPedidosListo(this.email).subscribe(pedidosListos => {
+    this.pedidosServices.getPedidosListo(this.id).subscribe(pedidosListos => {
       console.log(pedidosListos);
       this.pediListo = pedidosListos.sort((a, b) => {
         return a.time - b.time;
@@ -74,7 +89,7 @@ export class MostradorComponent implements OnInit {
 
  async onClickDelete(pedido:Pedidos){
 
-  const response = await this.pedidosServices.deletePedido(pedido, this.email);
+  const response = await this.pedidosServices.deletePedido(pedido, this.id);
   console.log(response);
 
 }
@@ -87,7 +102,7 @@ async onEdit(){
   this.pedidoEditar.pedido = this.registerForm.value.pedido;
   this.pedidoEditar.edit = true;
   
-  const response = await this.pedidosServices.editPedido(this.pedidoEditar, this.email);
+  const response = await this.pedidosServices.editPedido(this.pedidoEditar, this.id);
   console.log("Edit");
   console.log("Pedido a editar: "+this.pedidoEditar.id)
   console.log("Editado: "+response); 
@@ -101,7 +116,7 @@ async onEditListo(){
   this.pedidoEditar.pedido = this.registerForm.value.pedido;
   this.pedidoEditar.edit = true;
   
-  const response = await this.pedidosServices.editPedidoListo(this.pedidoEditar, this.email);
+  const response = await this.pedidosServices.editPedidoListo(this.pedidoEditar,this.id);
   console.log("Edit");
   console.log("Pedido a editar: "+this.pedidoEditar.id)
   console.log("Editado: "+response); 
@@ -117,9 +132,9 @@ editForm(pedido:Pedidos){
 
 
 async onClickListo(pedido:Pedidos){
-
-  this.pedidosServices.addPedidoListo(pedido,this.email);
-  const response = await this.pedidosServices.deletePedido(pedido, this.email);
+  this.user.id = this.id;
+  this.pedidosServices.addPedidoListo(pedido,this.user);
+  const response = await this.pedidosServices.deletePedido(pedido, this.id);
   console.log(response);
 
 }
@@ -135,8 +150,8 @@ async onClickDeleteListo(pedido:Pedidos){
 
   
 
-   this.pedidosServices.addTotalDia(this.p, this.email); 
-  const response = await this.pedidosServices.deletePedidoListo(pedido, this.email);
+   this.pedidosServices.addTotalDia(this.p, this.id); 
+  const response = await this.pedidosServices.deletePedidoListo(pedido, this.id);
   console.log(response);
   console.log(this.dia + "pedidos: "+ this.p)
 

@@ -16,12 +16,16 @@ export class VentasComponent implements OnInit {
   
   dia:any =  new Date().toLocaleDateString()   ;
   email:string = "";
+  id:string = "";
   
   ngOnInit(): void {
     let log = sessionStorage.getItem("email") as string;
     this.email=log;
+
+    let id = sessionStorage.getItem("idUser") as string;
+    this.id = id;
     
-    this.pedidosServices.getTotalDia(this.dia.replace(/\//g, ""), this.email).subscribe(pedidos => {
+    this.pedidosServices.getTotalDia(this.dia.replace(/\//g, ""), this.id).subscribe(pedidos => {
      
       this.pedi = pedidos.sort((a, b) => {
         return a.time - b.time;
@@ -34,17 +38,17 @@ export class VentasComponent implements OnInit {
   }
 
   time(){
-   
-    this.pedidosServices.getTotalDia(this.fecha, this.email).subscribe(pedidos => {
-     
+    this.pedidosServices.getTotalDia(this.fecha.replace(/\//g, ""), this.id).subscribe(pedidos => {
+      
       this.pedi = pedidos.sort((a, b) => {
         return a.time - b.time;
       });
       console.log(this.pedi);
-     
+      
     })
     this.dia = this.fecha;
     console.log(this.dia.replace(/\//g, ""));
+    
   }
 
 }

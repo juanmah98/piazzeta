@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Clave } from 'src/app/interfaces/claves';
+import { EmailStorage } from 'src/app/interfaces/email';
 import { PedidosService } from 'src/app/services/pedidos.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
@@ -18,12 +19,19 @@ export class UserComponent implements OnInit {
   name:string ="";
   picture:string="";
   change:boolean=false;
+  
   users: Clave = {
     id: '',
     clave: '',
     email: ''
   };
   response: Clave[] = [];
+  em: EmailStorage[] = [];
+  userId:EmailStorage={
+    id: '',
+    email: ''
+  };
+  idUsuario:string = "";
 
   constructor(private formBuilder: FormBuilder, private userServices: UsuariosService) {
 
@@ -38,79 +46,89 @@ export class UserComponent implements OnInit {
   
 
   ngOnInit(): void {
+
+   let userNew:boolean=true;
     let email = sessionStorage.getItem("email") as string;
     let name = sessionStorage.getItem("name") as string;
     let picture = sessionStorage.getItem("picture") as string;
-    /* this.objetounico = this.decodificarJwt(token); */
-        
+    
     this.email = email;
     this.name = name;
     this.picture = picture;
+    this,this.userId.email=email;
+   
 
-    this.userServices.getId(email).subscribe(claves => {
-            
-      this.response =  claves;    
-      console.log(this.response)
+    this.userServices.getUser().subscribe(prod => {
+      console.log(prod);
+      this.em = prod;     
       
-     /*  claves.forEach(element =>
-         this.clave = element.clave);
+      for (var i = 0; i < this.em.length; i++) {
 
-         for (var index in claves) {
-          console.log(index); 
-        
-          console.log(arr[index]); // prints elements: 10, 20, 30, 40
-        }  */ 
-         if(claves.length!=0)
-      {
-        this.change=true;
-        this.clave = claves[0].clave;
-       
+        if(email == this.em[i].email){
+          this.idUsuario = this.em[i].id;
+          console.log("Dentro del if");     
+          sessionStorage.setItem("idUser", this.em[i].id);
+          console.log("Clave: " + this.em[i].id);   
+          
+          console.log("Clave de usuario");
+          this.userServices.getId( this.em[i].id).subscribe(claves => {
+            console.log("usuario");
+            this.response =  claves;    
+            console.log(this.response)
+            userNew = false;
+         
+               if(claves.length!=0)
+            {
+              this.change=true;
+              this.clave = claves[0].clave;
+             
+            }
+          });    
+        }
       }
-    });    
+     
+    });
+
+    setTimeout(() =>{
+      if(userNew == true){
+        this.userServices.addUser(this.userId) 
+            console.log("Fin onUser");  
+            userNew = false; 
+      }
+  }, 1000);
+
+    
+   
+ 
+    
    
   }
 
   async onSumbit(){
     this.users.clave = this.registerForm.value.claves;
     this.users.email= this.email;
-    /* if(this.response.length==0)
-    this.users.id = this.response[0].id; */
-   /* var response = await this.userServices.getId(this.email).subscribe(claves => {
-      console.log(claves);      
-    }) */
-    
-    
-        
-     
-     
+
+   
       console.log(this.users.id)
-      console.log("saliendo del get");
-      
-      
-      await this.userServices.addId(this.users);
+      console.log("Generando clave");
+     this.userId.email=this.email;
+     this.userId.id = this.idUsuario;
+            await this.userServices.addId(this.users, this.userId); 
         console.log("Se agrego nueva clave");
-       
-      
-         
-    
-    
+  
   }
 
   async onChange(){
     this.users.clave = this.registerForm.value.claves;
     this.users.email= this.email;  
     this.users.id = this.response[0].id;
+    this.userId.email=this.email;
+     this.userId.id = this.idUsuario;
    
-     
-      await  this.userServices.editId(this.users);
+        await  this.userServices.editId(this.users, this.userId);
         console.log("Se actualizo clave");
+ 
       
-       
-     
-         
-   
-    
-    
      console.log("listo el cambio")
      
      

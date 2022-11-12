@@ -3,6 +3,7 @@ import { Firestore, addDoc, collectionData, doc, deleteDoc, updateDoc, docSnapsh
 import { collection } from '@firebase/firestore';
 import { Observable, retry } from 'rxjs';
 import { Clave } from '../interfaces/claves';
+import { EmailStorage } from '../interfaces/email';
 import { Save } from '../interfaces/save';
 
 
@@ -10,41 +11,44 @@ import { Save } from '../interfaces/save';
   providedIn: 'root'
 })
 export class UsuariosService {
+  
 
   constructor(private firestore: Firestore) { }
 
-  addId(clave: Clave){
-    const claveRef = collection(this.firestore, `user/${clave.email}/clave`);
+
+  addUser(clave: EmailStorage){    
+    const claveRef = collection(this.firestore, `user`);
     return addDoc(claveRef, clave);
   }
 
-  getId(email:String): Observable<Clave[]>{
-    const claveRef = collection(this.firestore, `user/${email}/clave`);
+  getUser(): Observable<EmailStorage[]>{
+    const claveRef = collection(this.firestore, `user`);
+    return collectionData(claveRef, {idField: 'id'})  as Observable<EmailStorage[]>;
+  }
+
+  addId(clave: Clave, email:EmailStorage){
+    const claveRef = collection(this.firestore, `user/${email.id}/clave`);
+    return addDoc(claveRef, clave);
+  }
+
+  getId(id:string): Observable<Clave[]>{
+    const claveRef = collection(this.firestore, `user/${id}/clave`);
     return collectionData(claveRef, {idField: 'id'})  as Observable<Clave[]>;
   }
 
-  deleteId(clave: Clave){
-    const claveDocRef = doc(this.firestore,`${clave.email}/clave/${clave.id}`);
+  deleteId(clave: Clave, email:EmailStorage){
+    const claveDocRef = doc(this.firestore,`user/${email.id}/clave/${clave.id}`);
     return deleteDoc(claveDocRef);
   }
 
-  editId(pedido: Clave) {
+  editId(pedido: Clave, email:EmailStorage) {
     console.log("id Service: "+pedido.id)
     const pokemonDocumentReference = doc(
       this.firestore,
-      `user/${pedido.email}/clave/${pedido.id}`      
+      `user/${email.id}/clave/${pedido.id}`      
     );
     return updateDoc(pokemonDocumentReference, { ...pedido });
     
-  }
-
-  /* getUsers(){
-   return this.db.collection("user").valueChanges();
-  } */
-
-  getUsers(): Observable<any>{
-    const claveRef = collection(this.firestore, `user`);
-    return collectionData(claveRef, {idField:'user'})  as Observable<any>;
   }
 
 }

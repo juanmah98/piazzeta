@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EmailStorage } from 'src/app/interfaces/email';
 import { Pedidos } from 'src/app/interfaces/pedido';
 import { PedidosService } from 'src/app/services/pedidos.service';
 
@@ -11,11 +12,24 @@ export class CocinaComponent implements OnInit {
 
   constructor(private pedidosServices: PedidosService) { }
   pedi:Pedidos[] = [];
+  em:EmailStorage={
+    id: '',
+    email: ''
+  };
+
+  user:EmailStorage={
+    id: '',
+    email: ''
+  };
+
+  id:string ="";
   email:string="";
   ngOnInit(): void {
     let log = sessionStorage.getItem("email") as string;
+    let id = sessionStorage.getItem("idUser") as string;
+    this.id = id;
     this.email=log;
-    this.pedidosServices.getPedidos(log).subscribe(pedidos => {
+    this.pedidosServices.getPedidos(id).subscribe(pedidos => {
        /* console.log(pedidos);  */
       
        this.pedi = pedidos.sort((a, b) => {
@@ -31,8 +45,9 @@ export class CocinaComponent implements OnInit {
   }
 
  async onClickDelete(pedido:Pedidos){ 
-  this.pedidosServices.addPedidoListo(pedido, this.email);
-  const response = await this.pedidosServices.deletePedido(pedido,this.email);
+  this.user.id = this.id;
+  this.pedidosServices.addPedidoListo(pedido, this.user);
+  const response = await this.pedidosServices.deletePedido(pedido,this.id);
   console.log(response);
 }
 

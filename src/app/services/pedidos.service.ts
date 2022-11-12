@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore, addDoc, collectionData, doc, deleteDoc, updateDoc } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
 import { Observable } from 'rxjs';
+import { EmailStorage } from '../interfaces/email';
 import { Pedidos } from '../interfaces/pedido';
 import { Save } from '../interfaces/save';
 
@@ -12,62 +13,64 @@ export class PedidosService {
 
   constructor(private firestore: Firestore) { }
 
-  addPedido(pedido: Pedidos, email: string){
-    const pedidoRef = collection(this.firestore, `user/${email}/pedidos`);
+  addPedido(pedido: Pedidos,email:EmailStorage){
+    const pedidoRef = collection(this.firestore, `user/${email.id}/pedidos`);
     return addDoc(pedidoRef, pedido);
   }
 
-  getPedidos(email: string): Observable<Pedidos[]>{
-    const pedidoRef = collection(this.firestore, `user/${email}/pedidos`);
+  getPedidos(id: string): Observable<Pedidos[]>{
+    const pedidoRef = collection(this.firestore, `user/${id}/pedidos`);
     return collectionData(pedidoRef, {idField: 'id'})  as Observable<Pedidos[]>;
   }
 
-  deletePedido(pedido: Pedidos, email: string){
-    const pedidoDocRef = doc(this.firestore,`user/${email}/pedidos/${pedido.id}`);
+  deletePedido(pedido: Pedidos, id: string){
+    const pedidoDocRef = doc(this.firestore,`user/${id}/pedidos/${pedido.id}`);
     return deleteDoc(pedidoDocRef);
   }
 
-  addPedidoListo(pedido: Pedidos, email:string){
-    const pedidoRef = collection(this.firestore, `user/${email}/pedidosListos`);
+  addPedidoListo(pedido: Pedidos, email:EmailStorage){
+    const pedidoRef = collection(this.firestore, `user/${email.id}/pedidosListos`);
     return addDoc(pedidoRef, pedido);
   }
 
-  getPedidosListo(email:string): Observable<Pedidos[]>{
-    const pedidoRef = collection(this.firestore, `user/${email}/pedidosListos`);
+  getPedidosListo(id:string): Observable<Pedidos[]>{
+    const pedidoRef = collection(this.firestore, `user/${id}/pedidosListos`);
     return collectionData(pedidoRef, {idField: 'id'})  as Observable<Pedidos[]>;
   }
 
-  deletePedidoListo(pedido: Pedidos, email:string){
-    const pedidoDocRef = doc(this.firestore,`user/${email}/pedidosListos/${pedido.id}`);
+  deletePedidoListo(pedido: Pedidos, id:string){
+    const pedidoDocRef = doc(this.firestore,`user/${id}/pedidosListos/${pedido.id}`);
     return deleteDoc(pedidoDocRef);
   }
 
-  editPedido(pedido: Pedidos, email:string) {
+  editPedido(pedido: Pedidos, id:string) {
     console.log("id Service: "+pedido.id)
     const pokemonDocumentReference = doc(
       this.firestore,
-      `user/${email}/pedidos/${pedido.id}`      
+      `user/${id}/pedidos/${pedido.id}`      
     );
     return updateDoc(pokemonDocumentReference, { ...pedido });
   }
 
-  editPedidoListo(pedido: Pedidos, email:string) {
+  editPedidoListo(pedido: Pedidos, id:string) {
     console.log("id Service: "+pedido.id)
     const pokemonDocumentReference = doc(
       this.firestore,
-      `user/${email}/pedidosListos/${pedido.id}`      
+      `user/${id}/pedidosListos/${pedido.id}`      
     );
     return updateDoc(pokemonDocumentReference, { ...pedido });
   }
 
-  addTotalDia(pedido: Save, email:string){
-    const pedidoRef = collection(this.firestore,`user/${email}/${pedido.day.replace(/\//g, "")}`);
+  addTotalDia(pedido: Save, id:string){
+    const pedidoRef = collection(this.firestore,`user/${id}/${pedido.day.replace(/\//g, "")}`);
     return addDoc(pedidoRef, pedido);
   }
 
-  getTotalDia(pedido: String, email:string): Observable<Save[]>{
+  getTotalDia(pedido: String, id:string): Observable<Save[]>{
+    console.log(pedido)
+    console.log("pedido")
     
-    const pedidoRef = collection(this.firestore, `user/${email}/${pedido}`);
+    const pedidoRef = collection(this.firestore, `user/${id}/${pedido}`);
     return collectionData(pedidoRef, {idField: 'id'})  as Observable<Save[]>;
   }
 }

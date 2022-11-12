@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
     sessionStorage.setItem("email","");
     sessionStorage.setItem("name", "");
     sessionStorage.setItem("picture", "");
-    sessionStorage.setItem("login", "");
+    sessionStorage.setItem("login", "0");
     document.location.href = "/inicio"   
 
   }

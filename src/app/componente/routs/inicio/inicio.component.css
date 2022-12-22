@@ -6,6 +6,35 @@
     
 }
 
+.onno{
+    width: 25%;
+}
+
+@media (max-width: 900px) { 
+    
+    .onno{
+        width: 45%;
+    }
+   
+}
+
+@media (max-width: 500px) { 
+    
+    .onno{
+        width: 65%;
+    }
+   
+}
+
+@media (max-width: 400px) { 
+    
+    .onno{
+        width: 75%;
+    }
+   
+}
+  
+
 .btn-inicio{
     box-shadow: -10px -10px 15px rgba(255, 255, 255, 0.789),
             10px 10px 15px rgba(70,70,70,0.12);

@@ -49,21 +49,25 @@ export class InicioComponent implements OnInit {
      this.userServices.getUser().subscribe(prod => {
       console.log(prod);
       this.em = prod;     
+      console.log(this.em)
     });
       
-    
-       google.accounts.id.initialize({
-         /* LOCAL */
+    setTimeout(()=>{                           
+      google.accounts.id.initialize({
+        /* LOCAL */
            /*  client_id: '501716064015-c8od71c598jvqprag4vi88s2kkjr4sge.apps.googleusercontent.com',   */
-         /*  */
-            client_id: '501716064015-ghs2q8lm72me0bk9784ukjphu5p49jnj.apps.googleusercontent.com',  
-         callback: this.handleCredentialResponse
-       });
-       google.accounts.id.renderButton(
-         document.getElementById("buttonDiv"),
-         { theme: "outline", size: "large" }  // customization attributes
-       );
-       google.accounts.id.prompt(); // also display the One Tap dialog
+        /*  */
+          client_id: '501716064015-ghs2q8lm72me0bk9784ukjphu5p49jnj.apps.googleusercontent.com', 
+        callback: this.handleCredentialResponse
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("buttonDiv"),
+        { theme: "outline", size: "large" }  // customization attributes
+      );
+      google.accounts.id.prompt(); // also display the One Tap dialog
+  }, 200);
+    
+      
      
    }
  

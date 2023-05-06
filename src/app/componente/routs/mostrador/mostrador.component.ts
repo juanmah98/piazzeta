@@ -15,6 +15,7 @@ export class MostradorComponent implements OnInit {
 
   registerForm: any;
   dia:any =  new Date().toLocaleDateString()   ;
+  totalSeconds = 0;
  
 
 
@@ -63,8 +64,19 @@ export class MostradorComponent implements OnInit {
   id:string = "";
 
   email:string="";
-
+  minutos: number =1;
+  segundos: number =1;
+  
   ngOnInit(): void {
+   
+
+ /*    setTimeout(() =>{
+      this.mostrarTiempoTranscurrido()
+      console.log(this.segundos)
+  }, 2000); */
+
+
+
     let log = sessionStorage.getItem("email") as string;
     this.email=log;
     let id = sessionStorage.getItem("idUser") as string;
@@ -87,12 +99,8 @@ export class MostradorComponent implements OnInit {
     })
   }
 
- async onClickDelete(pedido:Pedidos){
 
-  const response = await this.pedidosServices.deletePedido(pedido, this.id);
-  console.log(response);
 
-}
 
 async onEdit(){
   
@@ -128,35 +136,64 @@ editForm(pedido:Pedidos){
   this.textoDeMesa = pedido.mesa;
   this.registerForm.value = pedido;
   console.log("Pedido a editar: "+pedido.id)
-}
 
-
-async onClickListo(pedido:Pedidos){
-  this.user.id = this.id;
-  this.pedidosServices.addPedidoListo(pedido,this.user);
-  const response = await this.pedidosServices.deletePedido(pedido, this.id);
-  console.log(response);
-
-}
-
-async onClickDeleteListo(pedido:Pedidos){
-  
   this.p.id = "";
   this.p.mesa = pedido.mesa;
   this.p.pedido = pedido.pedido;
   this.p.time = pedido.time;
   this.p.day = this.dia;
   this.p.edit=pedido.edit;
+}
+
+async onClickDelete(){
+
+let response = await this.pedidosServices.deletePedidoListo(this.pedidoEditar, this.id);
+  
+console.log(response);
+console.log(this.id);
+
+}
+
+async onClickListo(){
+  this.user.id = this.id;
+  this.pedidosServices.addPedidoListo(this.p,this.user);
+  const response = await this.pedidosServices.deletePedido(this.pedidoEditar, this.id);
+  console.log(response);
+
+}
+
+async onClickDeleteListo(){
+/*   
+  this.p.id = "";
+  this.p.mesa = pedido.mesa;
+  this.p.pedido = pedido.pedido;
+  this.p.time = pedido.time;
+  this.p.day = this.dia;
+  this.p.edit=pedido.edit; */
 
   
 
    this.pedidosServices.addTotalDia(this.p, this.id); 
-  const response = await this.pedidosServices.deletePedidoListo(pedido, this.id);
+  const response = await this.pedidosServices.deletePedidoListo(this.pedidoEditar, this.id);
   console.log(response);
   console.log(this.dia + "pedidos: "+ this.p)
 
 }
 
 
+time="";
+startTimer() {
+  setInterval(() => {
+    this.totalSeconds++;
+    this.updateTime();
+  }, 1000);
+}
+  updateTime() {
+    const minutes = Math.floor(this.totalSeconds / 60);
+    const seconds = this.totalSeconds % 60;
+    const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    this.time = formattedTime;
+    // ...
+  }
 
 }

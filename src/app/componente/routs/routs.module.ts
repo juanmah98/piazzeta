@@ -8,6 +8,7 @@ import { MostradorComponent } from './mostrador/mostrador.component';
 import { VentasComponent } from './ventas/ventas.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { UserComponent } from './user/user.component';
+import { HorasComponent } from './horas/horas.component';
 
 
 
@@ -19,7 +20,8 @@ import { UserComponent } from './user/user.component';
     MostradorComponent,
     VentasComponent,
     InicioComponent,
-    UserComponent
+    UserComponent,
+    HorasComponent
   ],
   imports: [
     CommonModule,

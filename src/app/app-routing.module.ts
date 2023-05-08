@@ -7,6 +7,7 @@ import { MostradorComponent } from './componente/routs/mostrador/mostrador.compo
 import { PrincipalComponent } from './componente/routs/principal/principal.component';
 import { UserComponent } from './componente/routs/user/user.component';
 import { VentasComponent } from './componente/routs/ventas/ventas.component';
+import { HorasComponent } from './componente/routs/horas/horas.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},  
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'ventas', component: VentasComponent},  
   {path: 'inicio', component: InicioComponent},  
   {path: 'user', component: UserComponent},  
+  {path: 'horas', component: HorasComponent},  
 ];
 
 @NgModule({

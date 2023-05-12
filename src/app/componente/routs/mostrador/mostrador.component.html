@@ -3,7 +3,7 @@
     
     <div class="row container-fluid ">
      
-          <div class="col-6">
+          <div class="col-sm-6 col-12">
         <p class="fs-4 fw-bold text-center">Pedidos</p>
         <div class="row">
        <!--  <div class="col-6 col-md-3 pb-3"*ngFor="let pediListo of pediListo" >
@@ -23,7 +23,7 @@
 
           </div>   -->
 
-          <div class="col-6 col-md-3 pb-3"*ngFor="let pediListo of pediListo" >
+          <div class="col-6 col-md-3 col-sm-4 pb-3"*ngFor="let pediListo of pediListo" >
             
             <div data-bs-toggle="modal" data-bs-target="#exampleModal1" (click)="editForm(pediListo)" class="card text-center shadow" style="border-color: rgb(0, 202, 7); background-color: rgb(0, 202, 7);">
                 <p class="fw-bold text-light p-3">Mesa {{pediListo.mesa}}</p>
@@ -144,7 +144,7 @@
     
 <!-- COCINA -->
     
-        <div class="col-6">
+        <div class="col-sm-6 col-12">
         <p class="fs-4 fw-bold  text-center">Cocina</p>
         <div class="row">
         <!-- <div class="col-6 col-md-3  pb-3"*ngFor="let pedi of pedi" >
@@ -163,7 +163,7 @@
             </div>   --> 
             
            
-            <div class="col-6 col-md-3  pb-3"*ngFor="let pedido of pedi" >
+            <div class="col-6 col-md-3 col-sm-4  pb-3"*ngFor="let pedido of pedi" >
             <div data-bs-toggle="modal" data-bs-target="#exampleModal22" (click)="editForm(pedido)" class="card text-center shadow cocina" [ngClass]="{'edit': pedido.edit}">
                   <p class="fw-bold text-light p-3">Mesa {{pedido.mesa}}</p>
                  <!--  <p>{{time}}</p> -->

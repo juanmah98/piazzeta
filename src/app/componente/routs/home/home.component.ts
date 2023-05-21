@@ -39,8 +39,13 @@ export class HomeComponent implements OnInit {
     this.registerForm = this.formBuilder.group(
       {
         id: [""],  
-        mesa: [""],      
-        pedido:[""],
+        cliente: [""],
+        telefono: [""],
+        fecha: [""],
+        hora: [""],
+        precio: [""],
+        seña: [""],                                    
+        observacion:[""],
         time: [serverTimestamp()],
         edit:[false]
        
@@ -76,19 +81,25 @@ export class HomeComponent implements OnInit {
 
    
   }
-
+  dia:any =  new Date().toLocaleDateString()   ;
  async onSumbit(){
     console.log(this.registerForm.value);
+  
+      console.log(this.registerForm.value.fecha.replace(/\-/g, ""));
+      console.log("dia");
+      console.log(this.dia);
+  
+  
       /* this.pedido = this.wtsp + '&text='+ '*Mesa:*%0A' + this.registerForm.value.mesa + '%0A*Pedido:*%0A' + this.registerForm.value.pedido ;
      
       window.location.href = this.pedido ;  */
-    if(this.registerForm.value.mesa != "" && this.registerForm.value.pedido != ""){
+   /*  if(this.registerForm.value.mesa != "" && this.registerForm.value.pedido != ""){ */
 
-      const respnse = await this.placesService.addPedido(this.registerForm.value, this.user);
+      const respnse = await this.placesService.addTurno(this.registerForm.value, this.user);
       console.log(respnse);
       this.onReset();
-      window.location.href = "/home" ;
-    }
+      window.location.href = "/home" ; 
+    /* }  */
    
   }
 

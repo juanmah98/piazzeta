@@ -55,9 +55,9 @@ export class InicioComponent implements OnInit {
     setTimeout(()=>{                           
       google.accounts.id.initialize({
         /* LOCAL */
-        /*  client_id: '501716064015-c8od71c598jvqprag4vi88s2kkjr4sge.apps.googleusercontent.com',   */
+        client_id: '501716064015-c8od71c598jvqprag4vi88s2kkjr4sge.apps.googleusercontent.com',  
         /*  */
-        client_id: '501716064015-ghs2q8lm72me0bk9784ukjphu5p49jnj.apps.googleusercontent.com', 
+      /*   client_id: '501716064015-ghs2q8lm72me0bk9784ukjphu5p49jnj.apps.googleusercontent.com',  */
         callback: this.handleCredentialResponse
       });
       google.accounts.id.renderButton(

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { EmailStorage } from '../interfaces/email';
 import { Pedidos } from '../interfaces/pedido';
 import { Save } from '../interfaces/save';
+import { Turnos } from '../interfaces/turno';
 
 @Injectable({
   providedIn: 'root'
@@ -72,5 +73,31 @@ export class PedidosService {
     
     const pedidoRef = collection(this.firestore, `user/${id}/${pedido}`);
     return collectionData(pedidoRef, {idField: 'id'})  as Observable<Save[]>;
+  }
+  
+
+
+  addTurno(turno: Turnos,email:EmailStorage){
+    const pedidoRef = collection(this.firestore, `user/${email.id}/turnos/fechas/${turno.fecha}`);
+    return addDoc(pedidoRef, turno);
+  }
+
+  getTurno(id: string, fecha:Date): Observable<Turnos[]>{
+    const pedidoRef = collection(this.firestore, `user/${id}/turnos/fechas/${fecha}`);
+    return collectionData(pedidoRef, {idField: 'id'})  as Observable<Turnos[]>;
+  }
+
+  deleteTurno(pedido: Pedidos, id: string){
+    const pedidoDocRef = doc(this.firestore,`user/${id}/pedidos/${pedido.id}`);
+    return deleteDoc(pedidoDocRef);
+  }
+
+  editTurno(pedido: Pedidos, id:string) {
+    console.log("id Service: "+pedido.id)
+    const pokemonDocumentReference = doc(
+      this.firestore,
+      `user/${id}/pedidos/${pedido.id}`      
+    );
+    return updateDoc(pokemonDocumentReference, { ...pedido });
   }
 }

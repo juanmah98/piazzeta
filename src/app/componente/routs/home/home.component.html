@@ -2,36 +2,112 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
 
 <body class="bg btn-primary text-light pt-5 mt-1" style="background-color: rgb(225, 225, 225);">
- 
+  
+
+  <h2 class="text-center text-dark">Turnos</h2>
+
+  <div class="row justify-content-center">
+
+    <div class="col-md-6">
   <form  (ngSumbit)="onSumbit()" [formGroup]="registerForm" id="form"  class=" shadow-md rounded px-8 mt-4 container-fluid ">
-    <div class="" style="background-color: rgb(225, 225, 225);">
-        <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="mesa">
+    
+    <div class="pb-3" style="background-color: rgb(225, 225, 225);">
+        <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="cliente">
         
         </label>
         <input
             class="form-control  shadow appearance-none cuadro border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            formControlName="mesa"  id="mesa" type="text" placeholder="Mesa" >
+            formControlName="cliente"  id="cliente" type="text" placeholder="Cliente" >
     </div>
 
+
+    <div class="pb-3" style="background-color: rgb(225, 225, 225);">
+      <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="telefono">
+      
+      </label>
+      <input
+          class="form-control  shadow appearance-none cuadro border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          formControlName="telefono"  id="telefono" type="text" placeholder="Telefono" >
+  </div>
     
+  <div class="row">
+
+    <div class="col-6">
+
+      <div class="pb-3" style="background-color: rgb(225, 225, 225);">
+        <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="fecha">
+        
+        </label>
+        <input
+            class="form-control  shadow appearance-none cuadro border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            formControlName="fecha"  id="fecha" type="date" placeholder="Fecha" >
+    </div>
+
+    </div>
+
+    <div class="col-6">
+
+      <div class="pb-3" style="background-color: rgb(225, 225, 225);">
+        <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="hora">
+        
+        </label>
+        <input
+            class="form-control  shadow appearance-none cuadro border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            formControlName="hora"  id="hora" type="time" placeholder="Hora" >
+    </div>
+    
+    </div>
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-6">
+
+      <div class="pb-3" style="background-color: rgb(225, 225, 225);">
+        <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="precio">
+        
+        </label>
+        <input
+            class="form-control  shadow appearance-none cuadro border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            formControlName="precio"  id="precio" type="number" placeholder="Precio" >
+    </div>
+
+    </div>
+
+    <div class="col-6">
+
+      <div class="pb-3" style="background-color: rgb(225, 225, 225);">
+        <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="seña">
+        
+        </label>
+        <input
+            class="form-control  shadow appearance-none cuadro border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            formControlName="seña"  id="seña" type="number" placeholder="Seña" >
+    </div>
+    
+    </div>
+  </div>
+ 
 
 
     <div class="pb-3">
-        <label class="block text-gray-700 text-sm font-bold mb-2 d-flex fw-bold " for="pedido">
+        <label class="block text-gray-700 text-sm font-bold mb-2 d-flex fw-bold " for="observacion">
            
         </label>
         <textarea
             class="form-control  shadow appearance-none cuadro border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            formControlName="pedido"  id="pedido" type="text" placeholder="Pedido" ></textarea>
+            formControlName="observacion"  id="observacion" type="text" placeholder="Observacion" ></textarea>
     </div>
 
    
 
     <div class="text-center" >
-        <button class="btn btn-primary mx-2" _target (click)="onSumbit()">Enviar</button>
+        <button class="btn btn-primary mx-2" _target (click)="onSumbit()">Guardar</button>
         
     </div>
 
   </form>
-  
+</div>
+</div>
 </body>

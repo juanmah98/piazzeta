@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { EmailStorage } from 'src/app/interfaces/email';
 import { Pedidos } from 'src/app/interfaces/pedido';
 import { Save } from 'src/app/interfaces/save';
+import { Turnos } from 'src/app/interfaces/turno';
 import { PedidosService } from 'src/app/services/pedidos.service';
 
 @Component({
@@ -13,35 +14,25 @@ import { PedidosService } from 'src/app/services/pedidos.service';
 })
 export class MostradorComponent implements OnInit {
 
+  registerFormEdit: any;
   registerForm: any;
-  dia:any =  new Date().toLocaleDateString()   ;
   totalSeconds = 0;
  
-
-
-  constructor(private formBuilder: FormBuilder,private pedidosServices: PedidosService) { 
-
-    this.registerForm = this.formBuilder.group(
-      {
-        id: [""],  
-        mesa: [""],      
-        pedido:[""],     
-      },
-      
-    )
-  }
-  pedi:Pedidos[] = [];
   pediListo:Pedidos[] = [];
   textoDeInput = "";
   textoDeMesa = 0;
-  pedidoEditar: Pedidos = {
+  turnoEditar: Turnos = {
     id: '',
-    mesa: 0,
-    pedido: '',
-    time: undefined,
+    cliente: "",
+    telefono: 0,
+    fecha: "",
+    hora:0,
+    precio:0,
+    sena:0,
+    observacion:"",
     edit: false
   };
-
+  
   p: Save = {
     id: '',
     mesa: 0,
@@ -50,7 +41,43 @@ export class MostradorComponent implements OnInit {
     edit: false,
     day: ''
   };
+  
+  
+  minutos: number =1;
+  segundos: number =1;
+  a:string = "";
+  hoy:any = "";
+  dia:any = "";
+  constructor(private formBuilder: FormBuilder,private pedidosServices: PedidosService) { 
 
+    this.registerForm = this.formBuilder.group(
+      {    
+        fecha: [""],
+
+      },
+      
+    );
+
+    this.registerFormEdit = this.formBuilder.group(
+      {
+        id: [""],  
+        cliente: [""],
+        telefono: [""],
+        fecha: [""],
+        hora: [""],
+        precio: [""],
+        sena: [""],                                    
+        observacion:[""],       
+        edit:[false]
+       
+     
+      },
+      
+    )
+
+
+   }
+  pedi:Turnos[] = [];
   em:EmailStorage={
     id: '',
     email: ''
@@ -61,106 +88,146 @@ export class MostradorComponent implements OnInit {
     email: ''
   };
 
-  id:string = "";
-
+  id:string ="";
   email:string="";
-  minutos: number =1;
-  segundos: number =1;
-  
   ngOnInit(): void {
-   
-
- /*    setTimeout(() =>{
-      this.mostrarTiempoTranscurrido()
-      console.log(this.segundos)
-  }, 2000); */
-
-
-
+    this.hoy = new Date();
+    this.a = this.hoy.toLocaleDateString();
+    console.log(this.a)
+    console.log(this.hoy);
     let log = sessionStorage.getItem("email") as string;
-    this.email=log;
     let id = sessionStorage.getItem("idUser") as string;
     this.id = id;
-    this.pedidosServices.getPedidos(id).subscribe(pedidos => {
-      console.log(pedidos);
-      this.pedi = pedidos.sort((a, b) => {
+    this.email=log;
+    this.time()
+    
+    
+ /*    this.pedidosServices.getTurno(id).subscribe(pedidos => {
+      
+      
+       this.pedi = pedidos.sort((a, b) => {
         return a.time - b.time;
       });
      
-    })
 
-   
-    this.pedidosServices.getPedidosListo(this.id).subscribe(pedidosListos => {
-      console.log(pedidosListos);
-      this.pediListo = pedidosListos.sort((a, b) => {
-        return a.time - b.time;
-      });
+    
+      console.log("Pedido: ", this.pedi);
      
-    })
+      
+    }) */
   }
 
+ /* async onClickDelete(pedido:Pedidos){ 
+  this.user.id = this.id;
+  this.pedidosServices.addPedidoListo(pedido, this.user);
+  const response = await this.pedidosServices.deletePedido(pedido,this.id);
+  console.log(response);
+} */
 
+time(){
+  if(this.registerForm.value.fecha == ""){
+    this.registerForm.value.fecha = this.hoy.toISOString().split('T')[0];
+    console.log(this.registerForm.value.fecha)
+    this.pedidosServices.getTurno(this.id, this.registerForm.value.fecha).subscribe(turnos => {
+    
+    
+      this.pedi = turnos.sort((a, b) => {
+        console.log(a.hora + b.hora)
+        return a.hora.replace(/\:/g, "") - b.hora.replace(/\:/g, "");
+        
+      });
+      console.log(this.pedi);
+      
+    })
+    
+  }else{
+
+ 
+  this.pedidosServices.getTurno(this.id, this.registerForm.value.fecha).subscribe(turnos => {
+    
+    
+    this.pedi = turnos.sort((a, b) => {
+      console.log(a.hora + b.hora)
+      return a.hora.replace(/\:/g, "") - b.hora.replace(/\:/g, "");
+      
+    });
+    console.log(this.pedi);
+    
+  })
+}
+  this.dia=this.registerForm.value.fecha;
+  
+}
+  
+cliente:string="";
+telefono:number = 0;
+fecha:Date = new Date();
+hora:number = 0;
+precio:number = 0;
+sena:number = 0;                                 
+observacion:string="";       
+edit:boolean=false;
 
 
 async onEdit(){
   
  
   console.log(this.registerForm.value.id);  
-  this.pedidoEditar.mesa = this.registerForm.value.mesa;
-  this.pedidoEditar.pedido = this.registerForm.value.pedido;
-  this.pedidoEditar.edit = true;
+  this.turnoEditar.cliente = this.registerFormEdit.value.cliente;
+  this.turnoEditar.telefono = this.registerFormEdit.value.telefono;
+  this.turnoEditar.fecha = this.registerFormEdit.value.fecha;
+  this.turnoEditar.hora = this.registerFormEdit.value.hora;
+  this.turnoEditar.precio = this.registerFormEdit.value.precio;
+  this.turnoEditar.sena = this.registerFormEdit.value.sena;
+  this.turnoEditar.observacion = this.registerFormEdit.value.observacion;
+  this.registerFormEdit.edit = true;
+  this.turnoEditar.edit = true
   
-  const response = await this.pedidosServices.editPedido(this.pedidoEditar, this.id);
+  const response = await this.pedidosServices.editTurno(this.turnoEditar, this.id, this.fecha);
   console.log("Edit");
-  console.log("Pedido a editar: "+this.pedidoEditar.id)
+  console.log("Pedido a editar: "+this.turnoEditar.id)
   console.log("Editado: "+response); 
 }
 
-async onEditListo(){
-  
- 
-  console.log(this.registerForm.value.id);  
-  this.pedidoEditar.mesa = this.registerForm.value.mesa;
-  this.pedidoEditar.pedido = this.registerForm.value.pedido;
-  this.pedidoEditar.edit = true;
-  
-  const response = await this.pedidosServices.editPedidoListo(this.pedidoEditar,this.id);
-  console.log("Edit");
-  console.log("Pedido a editar: "+this.pedidoEditar.id)
-  console.log("Editado: "+response); 
-}
 
-editForm(pedido:Pedidos){
-  this.pedidoEditar = pedido;
-  this.textoDeInput=pedido.pedido;
-  this.textoDeMesa = pedido.mesa;
-  this.registerForm.value = pedido;
-  console.log("Pedido a editar: "+pedido.id)
+editForm(turno:Turnos){
+  this.turnoEditar = turno;
+  this.cliente = turno.cliente
+  this.telefono = turno.telefono
+  this.fecha = turno.fecha
+  this.hora = turno.hora
+  this.precio = turno.precio
+  this.sena = turno.sena
+  this.observacion = turno.observacion
+  this.edit = turno.edit;
 
-  this.p.id = "";
+  this.registerFormEdit.value = turno;
+  console.log("Pedido a editar: "+turno.id)
+
+/*   this.p.id = "";
   this.p.mesa = pedido.mesa;
   this.p.pedido = pedido.pedido;
   this.p.time = pedido.time;
   this.p.day = this.dia;
-  this.p.edit=pedido.edit;
+  this.p.edit=pedido.edit; */
 }
 
-async onClickDelete(){
+/* async onClickDelete(){
 
 let response = await this.pedidosServices.deletePedidoListo(this.pedidoEditar, this.id);
   
 console.log(response);
 console.log(this.id);
 
-}
+} */
 
-async onClickListo(){
+/* async onClickListo(){
   this.user.id = this.id;
   this.pedidosServices.addPedidoListo(this.p,this.user);
   const response = await this.pedidosServices.deletePedido(this.pedidoEditar, this.id);
   console.log(response);
 
-}
+} */
 
 async onClickDeleteListo(){
 /*   
@@ -173,27 +240,12 @@ async onClickDeleteListo(){
 
   
 
-   this.pedidosServices.addTotalDia(this.p, this.id); 
+/*    this.pedidosServices.addTotalDia(this.p, this.id); 
   const response = await this.pedidosServices.deletePedidoListo(this.pedidoEditar, this.id);
   console.log(response);
-  console.log(this.dia + "pedidos: "+ this.p)
+  console.log(this.dia + "pedidos: "+ this.p) */
 
 }
 
-
-time="";
-startTimer() {
-  setInterval(() => {
-    this.totalSeconds++;
-    this.updateTime();
-  }, 1000);
-}
-  updateTime() {
-    const minutes = Math.floor(this.totalSeconds / 60);
-    const seconds = this.totalSeconds % 60;
-    const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    this.time = formattedTime;
-    // ...
-  }
 
 }

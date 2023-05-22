@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
         fecha: [""],
         hora: [""],
         precio: [""],
-        seña: [""],                                    
+        sena: [""],                                    
         observacion:[""],
         time: [serverTimestamp()],
         edit:[false]
@@ -84,11 +84,6 @@ export class HomeComponent implements OnInit {
   dia:any =  new Date().toLocaleDateString()   ;
  async onSumbit(){
     console.log(this.registerForm.value);
-  
-      console.log(this.registerForm.value.fecha.replace(/\-/g, ""));
-      console.log("dia");
-      console.log(this.dia);
-  
   
       /* this.pedido = this.wtsp + '&text='+ '*Mesa:*%0A' + this.registerForm.value.mesa + '%0A*Pedido:*%0A' + this.registerForm.value.pedido ;
      

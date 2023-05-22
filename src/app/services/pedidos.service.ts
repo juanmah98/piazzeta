@@ -92,11 +92,11 @@ export class PedidosService {
     return deleteDoc(pedidoDocRef);
   }
 
-  editTurno(pedido: Pedidos, id:string) {
+  editTurno(pedido: Turnos, id:string, fecha:Date) {
     console.log("id Service: "+pedido.id)
     const pokemonDocumentReference = doc(
       this.firestore,
-      `user/${id}/pedidos/${pedido.id}`      
+      `user/${id}/turnos/fechas/${fecha}/${pedido.id}`      
     );
     return updateDoc(pokemonDocumentReference, { ...pedido });
   }

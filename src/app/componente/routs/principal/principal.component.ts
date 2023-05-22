@@ -9,20 +9,21 @@ export class PrincipalComponent implements OnInit {
 
   constructor() { }
 
+  lista:boolean = true;
+  cuadricula:boolean = false;
   ngOnInit(): void {
   }
 
-  home(){
-    window.location.href = "/home"
+  listaSet(){
+   this.cuadricula=true;
+   this.lista = false;
   }
 
-  cocina(){
-    window.location.href = "/cocina"
-  }
+  cuadriculaSet(){
+    this.cuadricula=false;
+    this.lista = true;
+   }
 
-  caja(){
-    window.location.href = "/caja"
-  }
 
 
 }

@@ -13,9 +13,11 @@
                 formControlName="fecha"  id="fecha" type="date" placeholder="Fecha" >
                 
                 <div class="text-center pt-2" >
+                 
                     <button class="btn btn-primary mx-2" _target (click)="time()">Buscar</button>
                     
                 </div>
+              
                
             </div>
 
@@ -24,7 +26,7 @@
     </div>
     </div>
     <div class="row justify-content-center">
-        <h3 class="text-dark">{{dia}}</h3>
+        <h3 class="text-dark pb-2">{{dia}}</h3>
             <div class="col-12" >              
               
                 <table class="table table-success table-striped" >
@@ -36,6 +38,8 @@
                         <th scope="col">Obs</th>
                         <th scope="col">Pre</th>
                         <th scope="col">Seña</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col text-center">Accion</th>
                        
                       </tr>
                     </thead>
@@ -43,10 +47,20 @@
                       <tr *ngFor="let pedi of pedi, let id = index">
                         
                         <td>{{pedi.cliente}}</td>
-                        <td><br>{{pedi.hora}}<br></td>  
+                        <td>{{pedi.hora}}</td>  
                         <td>{{pedi.observacion}}</td> 
                         <td>${{pedi.precio}}</td> 
-                        <td>${{pedi.sena}}</td>  
+                        <td>${{pedi.sena}}</td>
+                        <td>{{pedi.telefono}}</td>
+                        <td><Button class="btn btn-primary mx-1" data-bs-toggle="modal"  data-bs-target="#exampleModal2" (click)="editForm(pedi)" ><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M20.71 7.04006C21.1 6.65006 21.1 6.00006 20.71 5.63006L18.37 3.29006C18 2.90006 17.35 2.90006 16.96 3.29006L15.12 5.12006L18.87 8.87006L20.71 7.04006ZM3 17.2501V21.0001H6.75L17.81 9.93006L14.06 6.18006L3 17.2501Z" fill="white"/>
+                          </svg>
+                          </Button>
+                          <Button class="btn btn-danger"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4ZM6 19C6 19.5304 6.21071 20.0391 6.58579 20.4142C6.96086 20.7893 7.46957 21 8 21H16C16.5304 21 17.0391 20.7893 17.4142 20.4142C17.7893 20.0391 18 19.5304 18 19V7H6V19Z" fill="white"/>
+                            </svg>
+                            
+                            </Button></td>   
                         
                                                                  
                       </tr>
@@ -56,6 +70,125 @@
                 
                              
             </div>
+        </div>
+
+        <!-- EDITAR -->
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">Editar pedido</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form   [formGroup]="registerFormEdit" id="form"  class=" shadow-md rounded px-8 mt-4 container-fluid ">
+                    
+                    <div class="pb-3" >
+                        <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="cliente">
+                        
+                        </label>
+                        <input [(ngModel)]='cliente'
+                            class="form-control  shadow appearance-none cuadro border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            formControlName="cliente"  id="cliente" type="text" placeholder="Cliente" >
+                    </div>
+                
+                
+                    <div class="pb-3" >
+                      <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="telefono">
+                      
+                      </label>
+                      <input [(ngModel)]='telefono'
+                          class="form-control  shadow appearance-none cuadro border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          formControlName="telefono"  id="telefono" type="text" placeholder="Telefono" >
+                  </div>
+                    
+                  <div class="row">
+                
+                    <div class="col-6">
+                
+                      <div class="pb-3" >
+                        <p class="text-center fw-bold fs-5 text-dark">Fehca</p>
+                        <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="fecha">
+                        
+                        </label>
+                        <input  [(ngModel)]='fecha'
+                            class="form-control  shadow appearance-none cuadro border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            formControlName="fecha"  id="fecha" type="date" placeholder="Fecha" >
+                    </div>
+                
+                    </div>
+                
+                    <div class="col-6">
+                
+                      <div class="pb-3" >
+                        <p class="text-center fw-bold fs-5 text-dark">Hora</p>
+                        <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="hora">
+                        
+                        </label>
+                        <input  [(ngModel)]='hora'
+                            class="form-control  shadow appearance-none cuadro border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            formControlName="hora"  id="hora" type="time" placeholder="Hora" >
+                    </div>
+                    
+                    </div>
+                  </div>
+                
+                
+                  <div class="row">
+                
+                    <div class="col-6">
+                
+                      <div class="pb-3" >
+                        <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="precio">
+                        
+                        </label>
+                        <input  [(ngModel)]='precio'
+                            class="form-control  shadow appearance-none cuadro border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            formControlName="precio"  id="precio" type="number" placeholder="Precio" >
+                    </div>
+                
+                    </div>
+                
+                    <div class="col-6">
+                
+                      <div class="pb-3" >
+                        <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="seña">
+                        
+                        </label>
+                        <input  [(ngModel)]='sena'
+                            class="form-control  shadow appearance-none cuadro border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            formControlName="sena"  id="sena" type="number" placeholder="sena" >
+                    </div>
+                    
+                    </div>
+                  </div>
+                 
+                
+                
+                    <div class="pb-3">
+                        <label class="block text-gray-700 text-sm font-bold mb-2 d-flex fw-bold " for="observacion">
+                           
+                        </label>
+                        <textarea  [(ngModel)]='observacion'
+                            class="form-control  shadow appearance-none cuadro border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            formControlName="observacion"  id="observacion" type="text" placeholder="Observacion" ></textarea>
+                    </div>
+                
+                     
+                  
+                      <div class="text-center" >
+                          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onEdit()">Editar</button>
+                          
+                      </div>
+                  
+                    </form>
+              </div>
+              <div class="modal-footer justify-content-center">
+             
+               
+              </div>
+            </div>
+          </div>
         </div>
     </div>
 </body>

@@ -9,6 +9,7 @@ import { VentasComponent } from './ventas/ventas.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { UserComponent } from './user/user.component';
 import { HorasComponent } from './horas/horas.component';
+import { CalendarComponentComponent } from './calendar-component/calendar-component.component';
 
 
 
@@ -21,7 +22,8 @@ import { HorasComponent } from './horas/horas.component';
     VentasComponent,
     InicioComponent,
     UserComponent,
-    HorasComponent
+    HorasComponent,
+    CalendarComponentComponent
   ],
   imports: [
     CommonModule,

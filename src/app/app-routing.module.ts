@@ -8,6 +8,7 @@ import { PrincipalComponent } from './componente/routs/principal/principal.compo
 import { UserComponent } from './componente/routs/user/user.component';
 import { VentasComponent } from './componente/routs/ventas/ventas.component';
 import { HorasComponent } from './componente/routs/horas/horas.component';
+import { CalendarComponentComponent } from './componente/routs/calendar-component/calendar-component.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},  
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'inicio', component: InicioComponent},  
   {path: 'user', component: UserComponent},  
   {path: 'horas', component: HorasComponent},  
+  {path: 'calendario', component: CalendarComponentComponent},  
 ];
 
 @NgModule({

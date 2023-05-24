@@ -9,8 +9,8 @@ export class PrincipalComponent implements OnInit {
 
   constructor() { }
 
-  lista:boolean = true;
-  cuadricula:boolean = false;
+  lista:boolean = false;
+  cuadricula:boolean = true;
   ngOnInit(): void {
   }
 

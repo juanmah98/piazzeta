@@ -1,12 +1,30 @@
-<div class="calendar">
-    <div class="row">
+<div class="pb-2">
+    <!-- <div class="row">
       <div class="col-12">
         <h2>Calendario</h2>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <datepicker [(ngModel)]="selectedDate" ></datepicker>
+    </div> -->
+    <div class=" row justify-content-center">
+      <div class="col-12 col-sm-6 col-md-6 col-xl-10  calendar">
+        <div class="month-calendar">
+          <div class="month-navigation">
+            <button (click)="previousMonth()">&lt;</button>
+            <div class="month">{{ currentMonth.name }} {{ currentMonth.year }}</div>
+            <button (click)="nextMonth()">&gt;</button>
+          </div>
+          <div class="weekdays">
+            <div class="weekday">Lun</div>
+            <div class="weekday">Mar</div>
+            <div class="weekday">Mié</div>
+            <div class="weekday">Jue</div>
+            <div class="weekday">Vie</div>
+            <div class="weekday">Sáb</div>
+            <div class="weekday">Dom</div>
+          </div>
+          <div class="days">
+            <div class="day" *ngFor="let day of currentMonth.days" (click)="dia(day)">{{ day }}</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

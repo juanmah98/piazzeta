@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { EmailStorage } from 'src/app/interfaces/email';
 import { Pedidos } from 'src/app/interfaces/pedido';
@@ -11,11 +11,22 @@ import { PedidosService } from 'src/app/services/pedidos.service';
   styleUrls: ['./cocina.component.css']
 })
 export class CocinaComponent implements OnInit {
+  @Input() variableEntrada: string | undefined;
+  @Output() eventoClic = new EventEmitter<void>();
+
+  
+
+  manejarClic() {
+    this.eventoClic.emit();
+    console.log("funciona");
+    console.log(this.variableEntrada);
+    this.time();
+  }
   registerForm: any;
   registerFormEdit: any;
   a:string = "";
   hoy:any = "";
-  dia:any = "";
+  dia:any = new Date().toLocaleDateString();;
   turnoEditar: Turnos = {
     id: '',
     cliente: "",
@@ -68,7 +79,9 @@ export class CocinaComponent implements OnInit {
   id:string ="";
   email:string="";
   ngOnInit(): void {
+  
     this.hoy = new Date();
+    
     this.a = this.hoy.toLocaleDateString();
     console.log(this.a)
     console.log(this.hoy);
@@ -102,14 +115,18 @@ export class CocinaComponent implements OnInit {
 }
 
 time(){
+  const fecha: any = this.variableEntrada;
   if(this.registerForm.value.fecha == ""){
+   
     this.registerForm.value.fecha = this.hoy.toISOString().split('T')[0];
+    console.log("antes del get")    
     console.log(this.registerForm.value.fecha)
+    this.dia= this.registerForm.value.fecha;
     this.pedidosServices.getTurno(this.id, this.registerForm.value.fecha).subscribe(turnos => {
     
     
       this.pedi = turnos.sort((a, b) => {
-        console.log(a.hora + b.hora)
+        /* console.log(a.hora + b.hora) */
         return a.hora.replace(/\:/g, "") - b.hora.replace(/\:/g, "");
         
       });
@@ -118,9 +135,10 @@ time(){
     })
     
   }else{
-
- 
-  this.pedidosServices.getTurno(this.id, this.registerForm.value.fecha).subscribe(turnos => {
+    this.dia= fecha;
+   
+   
+  this.pedidosServices.getTurno(this.id, fecha).subscribe(turnos => {
     
     
     this.pedi = turnos.sort((a, b) => {
@@ -132,7 +150,7 @@ time(){
     
   })
 }
-  this.dia=this.registerForm.value.fecha;
+ 
   
 }
 

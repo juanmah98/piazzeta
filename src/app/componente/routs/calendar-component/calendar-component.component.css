@@ -1,7 +1,8 @@
 .calendar {
     background-color: #212529;
     color: #fff;
-    padding: 20px;
+    padding: 10px;
+   
     border-radius: 5px;
   }
   
@@ -10,25 +11,59 @@
     margin-bottom: 20px;
   }
   
-  .calendar .bs-datepicker-container {
-    background-color: #343a40;
+  .calendar .month-calendar {
+    padding: 10px;
   }
   
-  .calendar .bs-datepicker-body table td span.selected {
-    background-color: #6c757d;
+  .calendar .month-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .calendar .month-navigation button {
+    background: none;
+    border: none;
     color: #fff;
-    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 0 10px;
   }
   
-  .calendar .bs-datepicker-body table td span.focused {
-    box-shadow: none;
+  .calendar .month {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
   }
   
-  .calendar .bs-datepicker-body table td span.text-primary {
-    color: #007bff;
+  .calendar .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 5px;
+    font-weight: bold;
+    margin-bottom: 5px;
   }
   
-  .calendar .bs-datepicker-body table td span.text-danger {
-    color: #dc3545;
+  .calendar .weekday {
+    text-align: center;
+  }
+  
+  .calendar .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 5px;
+  }
+  
+  .calendar .day {
+    text-align: center;
+    padding: 10px;
+    background-color: #343a40;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .calendar .day:hover {
+    background-color: #6c757d;
   }
   

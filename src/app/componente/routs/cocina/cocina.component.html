@@ -2,7 +2,7 @@
     <div class="container-fluid ">
        
           <div class="row justify-content-center ">
-            <div class="col-6 col-sm-4 col-md-2">
+            <!-- <div class="col-6 col-sm-4 col-md-2">
             <form  (ngSumbit)="time()" [formGroup]="registerForm" id="form"  class=" shadow-md rounded px-8 mt-4 container-fluid "> 
             <div class="pb-3" style="background-color: rgb(225, 225, 225);">
                 <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="hora">
@@ -15,7 +15,7 @@
                 <div class="text-center pt-2" >
                  
                     <button class="btn btn-primary mx-2" _target (click)="time()">Buscar</button>
-                    
+                   
                 </div>
               
                
@@ -23,7 +23,7 @@
 
             
         </form>
-    </div>
+    </div> -->
     </div>
     <div class="row justify-content-center">
         <h3 class="text-dark pb-2">{{dia}}</h3>
@@ -52,15 +52,24 @@
                         <td>${{pedi.precio}}</td> 
                         <td>${{pedi.sena}}</td>
                         <td>{{pedi.telefono}}</td>
-                        <td><Button class="btn btn-primary mx-1" data-bs-toggle="modal"  data-bs-target="#exampleModal2" (click)="editForm(pedi)" ><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <td *ngIf="pedi.edit ==false"><Button class="btn btn-primary mx-1 mb-1" data-bs-toggle="modal"  data-bs-target="#exampleModal2" (click)="editForm(pedi)" ><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M20.71 7.04006C21.1 6.65006 21.1 6.00006 20.71 5.63006L18.37 3.29006C18 2.90006 17.35 2.90006 16.96 3.29006L15.12 5.12006L18.87 8.87006L20.71 7.04006ZM3 17.2501V21.0001H6.75L17.81 9.93006L14.06 6.18006L3 17.2501Z" fill="white"/>
                           </svg>
                           </Button>
-                          <Button class="btn btn-danger"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <Button class="btn btn-danger mx-1 mb-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4ZM6 19C6 19.5304 6.21071 20.0391 6.58579 20.4142C6.96086 20.7893 7.46957 21 8 21H16C16.5304 21 17.0391 20.7893 17.4142 20.4142C17.7893 20.0391 18 19.5304 18 19V7H6V19Z" fill="white"/>
                             </svg>
                             
-                            </Button></td>   
+                            </Button></td>
+                         <td *ngIf="pedi.edit == true"><Button class="btn btn-success mx-1 mb-1" data-bs-toggle="modal"  data-bs-target="#exampleModal2" (click)="editForm(pedi)" ><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M20.71 7.04006C21.1 6.65006 21.1 6.00006 20.71 5.63006L18.37 3.29006C18 2.90006 17.35 2.90006 16.96 3.29006L15.12 5.12006L18.87 8.87006L20.71 7.04006ZM3 17.2501V21.0001H6.75L17.81 9.93006L14.06 6.18006L3 17.2501Z" fill="white"/>
+                              </svg>
+                              </Button>
+                              <Button class="btn btn-danger mx-1 mb-1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4ZM6 19C6 19.5304 6.21071 20.0391 6.58579 20.4142C6.96086 20.7893 7.46957 21 8 21H16C16.5304 21 17.0391 20.7893 17.4142 20.4142C17.7893 20.0391 18 19.5304 18 19V7H6V19Z" fill="white"/>
+                                </svg>
+                                
+                                </Button></td>      
                         
                                                                  
                       </tr>

@@ -16,8 +16,8 @@
         <div *ngIf="lista!=true">
             <div class="row">
                 <div class="col-4 d-none d-xl-block">  <app-calendar-component (variableEnviada)="recibirVariable($event)"></app-calendar-component></div>
-                <div class="col-8 d-none d-xl-block"> <app-cocina [variableEntrada]="variableParaPasar" (eventoClic)="manejarClicHijo()" ></app-cocina></div>
-                <div class="col-12 d-xl-none"> <app-cocina [variableEntrada]="variableParaPasar" (eventoClic)="manejarClicHijo()" ></app-cocina></div>
+                <div class="col-xl-8 col-md-12"> <app-cocina [variableEntrada]="variableParaPasar" (eventoClic)="manejarClicHijo()" ></app-cocina></div>
+             
             </div>
            
         </div>

@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, collectionData, doc, deleteDoc, updateDoc, docSnapshots, onSnapshot } from '@angular/fire/firestore';
-import { collection } from '@firebase/firestore';
-import { Observable, retry } from 'rxjs';
-import { Clave } from '../interfaces/claves';
-import { EmailStorage } from '../interfaces/email';
-import { Save } from '../interfaces/save';
+
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -13,42 +11,46 @@ import { Save } from '../interfaces/save';
 export class UsuariosService {
   
 
-  constructor(private firestore: Firestore) { }
+  private apiUrl = 'https://qesyeoifdwtcehlbwmfw.supabase.co/rest/v1/usuarios';
+  private apiKey = environment.supabaseKey; // Reemplaza con tu API key
+  private apiKeyUser = environment.userkey; // Reemplaza con tu API key
 
 
-  addUser(clave: EmailStorage){    
-    const claveRef = collection(this.firestore, `user`);
-    return addDoc(claveRef, clave);
+  constructor(private http: HttpClient) {}
+
+  getUsers(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'apikey': this.apiKey,
+      'Authorization': 'Bearer ' + this.apiKey,
+    });
+
+    return this.http.get(this.apiUrl, { headers });
   }
 
-  getUser(): Observable<EmailStorage[]>{
-    const claveRef = collection(this.firestore, `user`);
-    return collectionData(claveRef, {idField: 'id'})  as Observable<EmailStorage[]>;
+  // Método para obtener usuarios con columnas específicas
+  getEmails(): Observable<any> {
+    const headers = new HttpHeaders({
+      'apikey': this.apiKey,
+      'Authorization': 'Bearer ' + this.apiKey,
+    });
+
+    // Construir parámetros de consulta con HttpParams
+    const params = new HttpParams().set('select', 'email');
+
+    return this.http.get(`${this.apiUrl}`, { headers, params });
   }
 
-  addId(clave: Clave, email:EmailStorage){
-    const claveRef = collection(this.firestore, `user/${email.id}/clave`);
-    return addDoc(claveRef, clave);
-  }
+   // Método para realizar la solicitud POST
+   postUser(data: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'apikey': this.apiKey,
+      'Authorization': 'Bearer ' + this.apiKey,
+      'Prefer': 'return=minimal',
+    });
 
-  getId(id:string): Observable<Clave[]>{
-    const claveRef = collection(this.firestore, `user/${id}/clave`);
-    return collectionData(claveRef, {idField: 'id'})  as Observable<Clave[]>;
-  }
-
-  deleteId(clave: Clave, email:EmailStorage){
-    const claveDocRef = doc(this.firestore,`user/${email.id}/clave/${clave.id}`);
-    return deleteDoc(claveDocRef);
-  }
-
-  editId(pedido: Clave, email:EmailStorage) {
-    console.log("id Service: "+pedido.id)
-    const pokemonDocumentReference = doc(
-      this.firestore,
-      `user/${email.id}/clave/${pedido.id}`      
-    );
-    return updateDoc(pokemonDocumentReference, { ...pedido });
-    
+    return this.http.post(this.apiUrl, data, { headers });
   }
 
 }

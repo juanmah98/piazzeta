@@ -22,7 +22,9 @@ export class InicioComponent implements OnInit {
   };
   clavess:Clave[]=[];
 
-  constructor(private formBuilder: FormBuilder, private userServices: UsuariosService) {
+  usuarios: EmailStorage[] = [];
+
+  constructor(private formBuilder: FormBuilder, private usuariosApi:UsuariosService) {
 
     this.registerForm = this.formBuilder.group(
       {
@@ -38,26 +40,49 @@ export class InicioComponent implements OnInit {
  
    @Output() messageEvent = new EventEmitter<boolean>();
  
+
+   // Método para crear un usuario
+  crearUsuario(): void {
+    const data = {
+      email: "haloa-aaaa@hotmail.com",
+      clave: "aaaa"    
+    };
+
+    this.usuariosApi.postUser(data).subscribe(
+      (response) => {
+        console.log('Usuario creado con éxito', response);
+      },
+      (error) => {
+        console.error('Error al crear usuario', error);
+      }
+    );
+  }
  
    sendMessage() {
      this.messageEvent.emit(this.message)
    }  
    ngOnInit(): void {
- 
-    this.login = "0";
+
+
+    this.usuariosApi.getEmails().subscribe((data: any) => {
+      this.usuarios = data;
+      console.log(data);
+    });
+
+   /*  this.login = "0";
        sessionStorage.setItem("login", this.login);
      this.userServices.getUser().subscribe(prod => {
       console.log(prod);
       this.em = prod;     
       console.log(this.em)
-    });
+    }); */
       
     setTimeout(()=>{                           
       google.accounts.id.initialize({
         /* LOCAL */
-        /*  client_id: '501716064015-c8od71c598jvqprag4vi88s2kkjr4sge.apps.googleusercontent.com',   */
+          client_id: '501716064015-c8od71c598jvqprag4vi88s2kkjr4sge.apps.googleusercontent.com',   
         /*  */
-        client_id: '501716064015-ghs2q8lm72me0bk9784ukjphu5p49jnj.apps.googleusercontent.com', 
+        /* client_id: '501716064015-ghs2q8lm72me0bk9784ukjphu5p49jnj.apps.googleusercontent.com',  */
         callback: this.handleCredentialResponse
       });
       google.accounts.id.renderButton(
@@ -94,15 +119,22 @@ export class InicioComponent implements OnInit {
         sessionStorage.setItem("name", this.objetounico.name);
         sessionStorage.setItem("picture", this.objetounico.picture);
         console.log(this.objetounico.email);
-      
-         document.location.href = "/user"     
 
-       /*  for (var i = 0; i < this.em.length; i++) {
+      
+          document.location.href = "/loading/email" 
+         /* this.usuarios.forEach(email => {
           console.log("DENTRO DEL FOR");
-          if (this.objetounico.email == this.em[i]) {
+          if (this.objetounico.email == email) {
             console.log("ES IGUAL");
           }
-        } */
+         }) */
+
+         /* for (var i = 0; i < 5; i++) {
+          console.log("DENTRO DEL FOR");
+          if (this.objetounico.email == this.usuarios[i]) {
+            console.log("ES IGUAL");
+          }
+        }  */
         
        
 
@@ -121,9 +153,9 @@ export class InicioComponent implements OnInit {
      this.sendMessage();
    }
 
-
- async onSumbit(){
- 
+   async onSumbit(){
+     
+     /* 
  await this.userServices.getUser().subscribe(prod => {
    
     this.em = prod;     
@@ -146,8 +178,8 @@ export class InicioComponent implements OnInit {
     }
    
   });
- 
-  }
+ */
+  } 
 
 
 }

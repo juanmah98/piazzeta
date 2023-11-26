@@ -47,7 +47,6 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
 
-   let userNew:boolean=true;
     let email = sessionStorage.getItem("email") as string;
     let name = sessionStorage.getItem("name") as string;
     let picture = sessionStorage.getItem("picture") as string;
@@ -55,47 +54,18 @@ export class UserComponent implements OnInit {
     this.email = email;
     this.name = name;
     this.picture = picture;
-    this,this.userId.email=email;
+    this.userId.email=email;
    
 
-    this.userServices.getUser().subscribe(prod => {
-      console.log(prod);
-      this.em = prod;     
-      
-      for (var i = 0; i < this.em.length; i++) {
-
-        if(email == this.em[i].email){
-          this.idUsuario = this.em[i].id;
-          console.log("Dentro del if");     
-          sessionStorage.setItem("idUser", this.em[i].id);
-          console.log("Clave: " + this.em[i].id);   
-          
-          console.log("Clave de usuario");
-          this.userServices.getId( this.em[i].id).subscribe(claves => {
-            console.log("usuario");
-            this.response =  claves;    
-            console.log(this.response)
-            userNew = false;
-         
-               if(claves.length!=0)
-            {
-              this.change=true;
-              this.clave = claves[0].clave;
-             
-            }
-          });    
-        }
-      }
-     
-    });
-
-    setTimeout(() =>{
+    
+ 
+    /* setTimeout(() =>{
       if(userNew == true){
         this.userServices.addUser(this.userId) 
             console.log("Fin onUser");  
             userNew = false; 
       }
-  }, 1000);
+  }, 1000); */
 
     
    
@@ -113,7 +83,7 @@ export class UserComponent implements OnInit {
       console.log("Generando clave");
      this.userId.email=this.email;
      this.userId.id = this.idUsuario;
-            await this.userServices.addId(this.users, this.userId); 
+            /* await this.userServices.addId(this.users, this.userId);  */
         console.log("Se agrego nueva clave");
   
   }
@@ -125,7 +95,7 @@ export class UserComponent implements OnInit {
     this.userId.email=this.email;
      this.userId.id = this.idUsuario;
    
-        await  this.userServices.editId(this.users, this.userId);
+      /*   await  this.userServices.editId(this.users, this.userId); */
         console.log("Se actualizo clave");
  
       

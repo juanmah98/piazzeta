@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit {
     let email = sessionStorage.getItem("email") as string;
     this.email = email;
 
-    this.userServices.getUser().subscribe(prod => {
+    /* this.userServices.getUser().subscribe(prod => {
   
       this.em = prod;     
    
@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
       
       }
       
-    });
+    }); */
   
     
 

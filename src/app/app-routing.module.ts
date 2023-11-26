@@ -8,6 +8,7 @@ import { PrincipalComponent } from './componente/routs/principal/principal.compo
 import { UserComponent } from './componente/routs/user/user.component';
 import { VentasComponent } from './componente/routs/ventas/ventas.component';
 import { HorasComponent } from './componente/routs/horas/horas.component';
+import { LoadingComponent } from './componente/routs/loading/loading.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},  
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'ventas', component: VentasComponent},  
   {path: 'inicio', component: InicioComponent},  
   {path: 'user', component: UserComponent},  
+  {path: 'loading/:parametro', component: LoadingComponent},  
   {path: 'horas', component: HorasComponent},  
 ];
 

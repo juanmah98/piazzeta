@@ -19,38 +19,48 @@ export class UsuariosService {
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'apikey': this.apiKey,
-      'Authorization': 'Bearer ' + this.apiKey,
-    });
-
+    const headers = this.getHeaders();
     return this.http.get(this.apiUrl, { headers });
   }
 
-  // Método para obtener usuarios con columnas específicas
   getEmails(): Observable<any> {
-    const headers = new HttpHeaders({
-      'apikey': this.apiKey,
-      'Authorization': 'Bearer ' + this.apiKey,
-    });
-
-    // Construir parámetros de consulta con HttpParams
+    const headers = this.getHeaders();
     const params = new HttpParams().set('select', 'email');
-
     return this.http.get(`${this.apiUrl}`, { headers, params });
   }
 
-   // Método para realizar la solicitud POST
-   postUser(data: any): Observable<any> {
-    const headers = new HttpHeaders({
+  getClaves(): Observable<any> {
+    const headers = this.getHeaders();
+    const params = new HttpParams().set('select', 'clave');
+    return this.http.get(`${this.apiUrl}`, { headers, params });
+  }
+
+  postUser(data: any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.post(this.apiUrl, data, { headers });
+  }
+
+  updateUser(someValue: string, otherValue: string): Observable<any> {
+    const headers = this.getHeaders();
+
+    const updateData = {
+      clave: otherValue,
+    };
+
+    const queryParams = new HttpParams().set('email', `eq.${someValue}`);
+
+    return this.http.patch(this.apiUrl, updateData, { headers, params: queryParams });
+  }
+
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({
       'Content-Type': 'application/json',
       'apikey': this.apiKey,
       'Authorization': 'Bearer ' + this.apiKey,
       'Prefer': 'return=minimal',
     });
-
-    return this.http.post(this.apiUrl, data, { headers });
   }
+
+  
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { EmailStorage } from 'src/app/interfaces/email';
 import { UsuariosService } from 'src/app/services/usuarios.service';
@@ -11,8 +12,21 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 export class LoadingComponent implements OnInit {
 
   parametro: string='';
+  usuario: boolean = false;
   usuarios: any[] = [];
-  constructor(private route: ActivatedRoute, private usuariosApi:UsuariosService) {}
+  registerForm: any;
+  email:string='';
+  constructor(private route: ActivatedRoute, private usuariosApi:UsuariosService, private formBuilder: FormBuilder) {
+
+    this.registerForm = this.formBuilder.group(
+      {        
+        clave: [""],
+        aceptoTerminos: [false, Validators.requiredTrue],
+      },
+      
+    )
+
+  }
 
   ngOnInit(): void {
 
@@ -41,7 +55,9 @@ export class LoadingComponent implements OnInit {
           console.log("usuario registrado")
             document.location.href = "/user" 
         }else{
-          this.crearUsuario(email)          
+         /*  this.crearUsuario(email)           */
+              this.usuario=true;
+             this.email=email; 
         }
 
         
@@ -49,12 +65,11 @@ export class LoadingComponent implements OnInit {
     }
   }
 
- async crearUsuario(email:string): Promise<void> {
+ async crearUsuario(): Promise<void> {
     const data = {
-      email: email,
-      clave: ""    
+      email: this.email,
+      clave: this.registerForm.value.clave    
     };
-
     this.usuariosApi.postUser(data).subscribe(
       (response) => {
         console.log('Usuario creado con éxito', response);

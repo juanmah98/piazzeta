@@ -18,7 +18,7 @@ export class UserComponent implements OnInit {
   email: string ="";
   name:string ="";
   picture:string="";
-  change:boolean=false;
+  change:boolean=true;
   
   users: Clave = {
     id: '',
@@ -33,7 +33,8 @@ export class UserComponent implements OnInit {
   };
   idUsuario:string = "";
 
-  constructor(private formBuilder: FormBuilder, private userServices: UsuariosService) {
+  usuarios: any[] = [];
+  constructor(private formBuilder: FormBuilder, private usuariosApi:UsuariosService) {
 
     this.registerForm = this.formBuilder.group(
       {
@@ -54,52 +55,61 @@ export class UserComponent implements OnInit {
     this.email = email;
     this.name = name;
     this.picture = picture;
-    this.userId.email=email;
    
-
-    
+    this.usuariosApi.getUsers().subscribe((data: any) => {
+      this.usuarios = data;
+      let registred = false;
+      for (let i = 0; i < this.usuarios.length; i++) {
+        if(data[i].email == email){
+          this.clave = data[i].clave          
+          if(data[i].clave=='')
+          {
+            this.change=false;
+          }
+        }
+      }    
+      
+    });    
  
-    /* setTimeout(() =>{
-      if(userNew == true){
-        this.userServices.addUser(this.userId) 
-            console.log("Fin onUser");  
-            userNew = false; 
-      }
-  }, 1000); */
-
-    
-   
- 
-    
-   
   }
 
-  async onSumbit(){
-    this.users.clave = this.registerForm.value.claves;
-    this.users.email= this.email;
-
-   
-      console.log(this.users.id)
-      console.log("Generando clave");
-     this.userId.email=this.email;
-     this.userId.id = this.idUsuario;
-            /* await this.userServices.addId(this.users, this.userId);  */
-        console.log("Se agrego nueva clave");
+ /*  async onSumbit():Promise<void> {
+        const data = {
+          email: this.email,
+          clave: this.registerForm.value.claves
+        };
+        this.usuariosApi.postUser(data).subscribe(
+          (response) => {
+            console.log('Usuario creado con éxito', response);
+            this.registerForm.reset();
+          this.ngOnInit();
+          },
+          (error) => {
+            console.error('Error al crear usuario', error);
+          }
+        );    
   
-  }
+  } */
 
   async onChange(){
     this.users.clave = this.registerForm.value.claves;
-    this.users.email= this.email;  
-    this.users.id = this.response[0].id;
-    this.userId.email=this.email;
-     this.userId.id = this.idUsuario;
-   
-      /*   await  this.userServices.editId(this.users, this.userId); */
-        console.log("Se actualizo clave");
- 
-      
-     console.log("listo el cambio")
+  
+      const someValue = this.email;
+      const otherValue = this.registerForm.value.claves;
+  
+      this.usuariosApi.updateUser(someValue, otherValue).subscribe(
+        (response) => {
+          console.log('Usuario actualizado exitosamente', response);
+          this.registerForm.reset();
+          this.ngOnInit();
+          // Realiza acciones adicionales si es necesario
+        },
+        (error) => {
+          console.error('Error al actualizar usuario', error);
+          // Maneja el error de acuerdo a tus necesidades
+        }
+      );
+    
      
      
   }

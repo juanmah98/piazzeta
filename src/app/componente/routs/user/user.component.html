@@ -11,7 +11,7 @@
                 <p class="fs-3 p-1 inicio text-primary">{{clave}}</p>
             </div>
 
-            <form  (ngSumbit)="onSumbit()" *ngIf="change==false" style="color: rgb(65, 65, 65);" [formGroup]="registerForm" id="form"  class=" shadow-md rounded px-8 mt-4 container-fluid ">
+            <form  (ngSumbit)="onChange()" *ngIf="change==false" style="color: rgb(65, 65, 65);" [formGroup]="registerForm" id="form"  class=" shadow-md rounded px-8 mt-4 container-fluid ">
                 <p class="fs-5 fw-bold text-center">GENERAR CLAVE</p>
                 <div class="" style="background-color: rgb(225, 225, 225);">
                 <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="claves">
@@ -25,7 +25,7 @@
             
         
             <div class="text-center pt-4" >
-                <button class="btn btn-inicio mx-2"  (click)="onSumbit()">Generar</button>
+                <button class="btn btn-inicio mx-2"  (click)="onChange()">Generar</button>
                 
             </div>
         

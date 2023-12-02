@@ -9,7 +9,7 @@ export class InternoService {
 
   constructor() { }
 
-  private control = new BehaviorSubject<string>('0');
+  private control = new BehaviorSubject<string>('');
   private user = new BehaviorSubject<User>(
     {
       "id_usuario": "7c69ece0-aa71-4317-8166-ae818938d69f",

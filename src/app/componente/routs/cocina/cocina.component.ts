@@ -41,7 +41,7 @@ export class CocinaComponent implements OnInit {
   ngOnInit(): void {
 
 
-    this._ComandaService.getComandas().subscribe((data: any) => {
+    this._ComandaService.getTableChanges().subscribe((data: any) => {
       this.comanda = data;     
       
     });

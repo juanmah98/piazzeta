@@ -136,12 +136,13 @@ export class InicioComponent implements OnInit {
       this.usuarios = data;
       for (let i = 0; i < data.length; i++) {       
         if(data[i].id_usuario == this.registerForm.value.id){
+          sessionStorage.setItem("login", '2');
           this.user.id_usuario=data[i].id_usuario;
           this.user.email=data[i].email;
-          this.user.clave=data[i].clave;
+          this.user.clave=data[i].clave;          
           this._InternoService.setControl('2');
           this._InternoService.setUser(this.user);
-          this.router.navigate(['/principal']);
+          this.router.navigate(['/loading/clave']);
           /* document.location.href = "/principal"  */
         }
       }    

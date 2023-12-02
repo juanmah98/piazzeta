@@ -23,8 +23,15 @@ export class HeaderComponent implements OnInit {
    
     
     this._InternoService.miControl$.subscribe(valor => {
-      this.control = valor;
-      this.login = valor;
+
+      if(valor=='')
+      {
+        this.control = log;
+        this.login = log;
+      }else{
+        this.control = valor;
+        this.login = valor;
+      }
     });
   }
 

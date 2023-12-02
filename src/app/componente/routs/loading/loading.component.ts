@@ -65,6 +65,7 @@ export class LoadingComponent implements OnInit {
             this.user.id_usuario=data[i].id_usuario;
             this.user.email=data[i].email;
             this.user.clave=data[i].clave;
+            sessionStorage.setItem("login", '1');
             this._InternoService.setControl('1');
             this._InternoService.setUser(this.user);
             this.router.navigate(['/principal']);
@@ -83,6 +84,8 @@ export class LoadingComponent implements OnInit {
       });
     
         
+      }else if(this.parametro=='clave'){
+        this.router.navigate(['/principal']);
       }
   }
 

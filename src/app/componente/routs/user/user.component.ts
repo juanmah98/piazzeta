@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Clave } from 'src/app/interfaces/claves';
 import { EmailStorage } from 'src/app/interfaces/email';
+import { User } from 'src/app/interfaces/user';
+import { InternoService } from 'src/app/services/interno.service';
 import { PedidosService } from 'src/app/services/pedidos.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
@@ -20,12 +22,13 @@ export class UserComponent implements OnInit {
   picture:string="";
   change:boolean=true;
   
-  users: Clave = {
-    id: '',
-    clave: '',
-    email: ''
-  };
-  response: Clave[] = [];
+  user: User = {
+   
+    id_usuario: "",
+    email: "",
+    clave: ""        
+  
+}
   em: EmailStorage[] = [];
   userId:EmailStorage={
     id: '',
@@ -34,7 +37,10 @@ export class UserComponent implements OnInit {
   idUsuario:string = "";
 
   usuarios: any[] = [];
-  constructor(private formBuilder: FormBuilder, private usuariosApi:UsuariosService) {
+
+  uuidToReadableMap: Record<string, string> = {};
+  readableFormat = ""
+  constructor(private formBuilder: FormBuilder, private usuariosApi:UsuariosService, private _InternoService:InternoService) {
 
     this.registerForm = this.formBuilder.group(
       {
@@ -48,80 +54,51 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let email = sessionStorage.getItem("email") as string;
-    let name = sessionStorage.getItem("name") as string;
+    this._InternoService.miUser$.subscribe(valor => {
+      this.user = valor;     
+      this.clave=valor.id_usuario;
+      this.name=valor.clave;
+      this.email=valor.email;
+          });
+
+/*     let email = sessionStorage.getItem("email") as string;
+    let name = sessionStorage.getItem("name") as string; */
     let picture = sessionStorage.getItem("picture") as string;
     
-    this.email = email;
-    this.name = name;
+    /* this.email = this.user.email;
+    this.clave  = this.user.id_usuario;
+    this.name = this.user.clave;  */
     this.picture = picture;
    
-    this.usuariosApi.getUsers().subscribe((data: any) => {
+  /*   this.usuariosApi.getUsers().subscribe((data: any) => {
       this.usuarios = data;
       let registred = false;
-      for (let i = 0; i < this.usuarios.length; i++) {
+      for (let i = 0; i < data.length; i++) {
         if(data[i].email == email){
-          this.clave = data[i].clave          
-          if(data[i].clave=='')
-          {
-            this.change=false;
-          }
+          this.clave  = data[i].id_usuario;
+         
         }
       }    
       
-    });    
+    });    */ 
  
   }
 
- /*  async onSumbit():Promise<void> {
-        const data = {
-          email: this.email,
-          clave: this.registerForm.value.claves
-        };
-        this.usuariosApi.postUser(data).subscribe(
-          (response) => {
-            console.log('Usuario creado con éxito', response);
-            this.registerForm.reset();
-          this.ngOnInit();
-          },
-          (error) => {
-            console.error('Error al crear usuario', error);
-          }
-        );    
+  copiar() {
+    const textoACopiar = this.clave;
   
-  } */
-
-  async onChange(){
-    this.users.clave = this.registerForm.value.claves;
+    // Crear un elemento de texto oculto
+    const elementoOculto = document.createElement("textarea");
+    elementoOculto.value = textoACopiar;
+    document.body.appendChild(elementoOculto);
   
-      const someValue = this.email;
-      const otherValue = this.registerForm.value.claves;
+    // Seleccionar y copiar el texto
+    elementoOculto.select();
+    document.execCommand("copy");
   
-      this.usuariosApi.updateUser(someValue, otherValue).subscribe(
-        (response) => {
-          console.log('Usuario actualizado exitosamente', response);
-          this.registerForm.reset();
-          this.ngOnInit();
-          // Realiza acciones adicionales si es necesario
-        },
-        (error) => {
-          console.error('Error al actualizar usuario', error);
-          // Maneja el error de acuerdo a tus necesidades
-        }
-      );
-    
-     
-     
+    // Eliminar el elemento de texto oculto
+    document.body.removeChild(elementoOculto);
   }
-
-  /* private decodificarJwt(token:string){
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c){
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    return JSON.parse(jsonPayload);
-  } */
+  
 
 }

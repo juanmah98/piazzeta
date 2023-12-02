@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-principal',
@@ -7,21 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrincipalComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   home(){
-    window.location.href = "/home"
+    this.router.navigate(['/home']);
   }
 
   cocina(){
-    window.location.href = "/cocina"
+    this.router.navigate(['/cocina']);
   }
 
   caja(){
-    window.location.href = "/caja"
+    this.router.navigate(['/caja']);
   }
 
 

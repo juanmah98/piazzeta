@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { InternoService } from 'src/app/services/interno.service';
 
 
 
@@ -17,6 +18,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     RouterModule,
     FormsModule
-  ]
+  ],
+  providers: [InternoService],
 })
 export class LayoutModule { }

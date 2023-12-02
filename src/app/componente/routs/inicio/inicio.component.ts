@@ -2,8 +2,11 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Clave } from 'src/app/interfaces/claves';
 import { EmailStorage } from 'src/app/interfaces/email';
+import { InternoService } from 'src/app/services/interno.service';
 import { PedidosService } from 'src/app/services/pedidos.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import { Router } from '@angular/router';
+import { User } from 'src/app/interfaces/user';
 declare var google: any;
 
 @Component({
@@ -16,15 +19,23 @@ export class InicioComponent implements OnInit {
   registerForm: any;
   public objetounico:any = {};
   em:EmailStorage[] =[];
-  user:EmailStorage={
-    id: '',
-    email: ''
-  };
+ 
   clavess:Clave[]=[];
 
   usuarios: EmailStorage[] = [];
+  user: User = {
+   
+      id_usuario: "",
+      email: "",
+      clave: ""        
+    
+  }
 
-  constructor(private formBuilder: FormBuilder, private usuariosApi:UsuariosService) {
+  uuidToReadableMap: Record<string, string> = {};
+  retrievedUUID = ""
+
+
+  constructor(private formBuilder: FormBuilder, private usuariosApi:UsuariosService, private _InternoService: InternoService, private router: Router) {
 
     this.registerForm = this.formBuilder.group(
       {
@@ -68,14 +79,6 @@ export class InicioComponent implements OnInit {
       this.usuarios = data;
       console.log(data);
     });
-
-   /*  this.login = "0";
-       sessionStorage.setItem("login", this.login);
-     this.userServices.getUser().subscribe(prod => {
-      console.log(prod);
-      this.em = prod;     
-      console.log(this.em)
-    }); */
       
     setTimeout(()=>{                           
       google.accounts.id.initialize({
@@ -122,64 +125,29 @@ export class InicioComponent implements OnInit {
 
       
           document.location.href = "/loading/email" 
-         /* this.usuarios.forEach(email => {
-          console.log("DENTRO DEL FOR");
-          if (this.objetounico.email == email) {
-            console.log("ES IGUAL");
-          }
-         }) */
-
-         /* for (var i = 0; i < 5; i++) {
-          console.log("DENTRO DEL FOR");
-          if (this.objetounico.email == this.usuarios[i]) {
-            console.log("ES IGUAL");
-          }
-        }  */
-        
-       
-
-
-      
-      
-    
      }
      console.log("Fin google btn");    
    }
  
- 
-   singin(){
-    this.user.email=this.objetounico.email;
-     this.message = false;
-     this.sendMessage();
-   }
 
    async onSumbit(){
-     
-     /* 
- await this.userServices.getUser().subscribe(prod => {
-   
-    this.em = prod;     
- 
-    for (var i = 0; i < this.em.length; i++) {
-
-     this.userServices.getId(prod[i].id).subscribe(clave => {
-       
-        this.clavess = clave;
-
-        if(this.clavess[0].clave == this.registerForm.value.id){
-          
-          sessionStorage.setItem("email", this.clavess[0].email);
-          this.login = "2";
-          sessionStorage.setItem("login", this.login);
-           document.location.href = "/home"     
-
+   /* this._InternoService.setControl('2'); */
+    this.usuariosApi.getUsers().subscribe(async (data: any) => {
+      this.usuarios = data;
+      for (let i = 0; i < data.length; i++) {       
+        if(data[i].id_usuario == this.registerForm.value.id){
+          this.user.id_usuario=data[i].id_usuario;
+          this.user.email=data[i].email;
+          this.user.clave=data[i].clave;
+          this._InternoService.setControl('2');
+          this._InternoService.setUser(this.user);
+          this.router.navigate(['/principal']);
+          /* document.location.href = "/principal"  */
         }
-      });
-    }
-   
-  });
- */
-  } 
+      }    
 
-
+      
+    });
+ 
+  }
 }

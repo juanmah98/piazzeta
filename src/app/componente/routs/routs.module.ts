@@ -10,6 +10,7 @@ import { InicioComponent } from './inicio/inicio.component';
 import { UserComponent } from './user/user.component';
 import { HorasComponent } from './horas/horas.component';
 import { LoadingComponent } from './loading/loading.component';
+import { InternoService } from 'src/app/services/interno.service';
 
 
 
@@ -35,6 +36,7 @@ import { LoadingComponent } from './loading/loading.component';
     MostradorComponent,
     CocinaComponent,
     PrincipalComponent
-  ]
+  ],
+  providers: [InternoService]
 })
 export class RoutsModule { }

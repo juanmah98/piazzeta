@@ -1,16 +1,23 @@
-<body >
+<body *ngIf="login!='0'">
     
 
     <header>
        
         
-        <nav *ngIf="login=='1'" class="navbar bg-dark ">
+        <nav *ngIf="control=='1'" class="navbar bg-dark ">
             <div class="container-fluid " >
                 
                
                 <div class="navbar-content d-flex justify-content-start">
                     
                     <ul class="nav">
+
+                        <li class="nav-item">
+                            <a href="" rel="noopener noreferrer" class=" nav-item text-decoration-none text-light  fs-6 p-2 m-1" routerLink="/principal" >
+                               Inicio
+                            </a>
+                        </li>
+
                         <li class="nav-item">
                             <a href="" rel="noopener noreferrer" class=" nav-item text-decoration-none text-light  fs-6 p-2 m-1" routerLink="/home" >
                                Camarero
@@ -69,7 +76,7 @@
 
         
 
-        <nav  *ngIf="login=='0'" class="navbar bg-dark ">
+      <!--   <nav  *ngIf="control=='0'" class="navbar bg-dark ">
             <div class="container-fluid" >
                 
                
@@ -93,15 +100,20 @@
 
                 
             </div>
-        </nav>
+        </nav> -->
 
-        <nav *ngIf="login=='2'" class="navbar bg-dark ">
+        <nav *ngIf="control=='2'" class="navbar bg-dark ">
             <div class="container-fluid " >
                 
                
                 <div class="navbar-content d-flex justify-content-start">
                     
                     <ul class="nav">
+                        <li class="nav-item">
+                            <a href="" rel="noopener noreferrer" class=" nav-item text-decoration-none text-light  fs-6 p-2 m-1" routerLink="/principal" >
+                               Inicio
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="" rel="noopener noreferrer" class=" nav-item text-decoration-none text-light  fs-6 p-2 m-1" routerLink="/home" >
                                Camarero

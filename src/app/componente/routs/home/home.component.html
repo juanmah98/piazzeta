@@ -1,9 +1,11 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
 
-<body class="bg btn-primary text-light pt-5 mt-1" style="background-color: rgb(225, 225, 225);">
- 
-  <form  (ngSumbit)="onSumbit()" [formGroup]="registerForm" id="form"  class=" shadow-md rounded px-8 mt-4 container-fluid ">
+<body class="bg btn-primary text-light pt-4 container-fluid" style="background-color: rgb(225, 225, 225);">
+  <div class="row">
+    <h4 class="text-dark text-center fw-bold">NUEVA NOTA</h4>
+  <form  (ngSumbit)="onSumbit()" [formGroup]="registerForm" id="form"  class="d-flex justify-content-center shadow-md rounded px-8 mt-4 container-fluid ">
+    <div class="col-12 col-md-6 col-sm-8 ">
     <div class="" style="background-color: rgb(225, 225, 225);">
         <label class="block text-gray-700 text-sm font-bold b-2 d-flex fw-bold " for="mesa">
         
@@ -31,7 +33,8 @@
         <button class="btn btn-primary mx-2" _target (click)="onSumbit()">Enviar</button>
         
     </div>
-
+  </div>
   </form>
+</div>
   
 </body>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, interval, switchMap } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { createClient, SupabaseClient, Subscription, User } from '@supabase/supabase-js';
 import { Router } from '@angular/router'
@@ -15,48 +15,23 @@ export class ComandasService {
   private apiKey = environment.supabaseKey; // Reemplaza con tu API key
   private apiKeyUser = environment.userkey; // Reemplaza con tu API key
   
-  private supabase: SupabaseClient;
   private comandaSubject = new Subject<any>();
   private _currentUser: BehaviorSubject<boolean | User | any> = new BehaviorSubject(null)
 
 
   constructor(private http: HttpClient) {
-    this.supabase = createClient(this.apiUrl, this.apiKey)
-
-    // Manually load user session once on page load
-    // Note: This becomes a promise with getUser() in the next version!
-    const user = this.supabase.auth.getUser()
-    if (user) {
-      this._currentUser.next(user)
-    } else {
-      this._currentUser.next(false)
-    }
-
-    this.supabase.auth.onAuthStateChange((event, session) => {
-      if (event == 'SIGNED_IN') {
-        this._currentUser.next(session!.user)
-      } else {
-        this._currentUser.next(false)
-        /* this.router.navigateByUrl('/', { replaceUrl: true }) */
-      }
-    })
+    
   }
-
-  getTableChanges() {
-    const changes = new Subject();
-    this.supabase
-      .from('mi_tabla')
-      
-      .select();
-
-    return changes.asObservable();
-  }
-
-
 
   getComanda(): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.apiUrl, { headers });
+
+    // Intervalo de tiempo para la solicitud periódica (por ejemplo, cada 5 segundos)
+    const pollingInterval = 500; // en milisegundos
+
+    return interval(pollingInterval).pipe(
+      switchMap(() => this.http.get(this.apiUrl, { headers }))
+    );
   }
 
   postComanda(data: any): Observable<any> {

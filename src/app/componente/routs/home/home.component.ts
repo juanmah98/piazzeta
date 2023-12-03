@@ -4,6 +4,8 @@ import { Firestore } from '@angular/fire/firestore';
 import { FormBuilder } from '@angular/forms';
 import { serverTimestamp } from '@firebase/firestore';
 import { EmailStorage } from 'src/app/interfaces/email';
+import { ComandasService } from 'src/app/services/comandas.service';
+import { InternoService } from 'src/app/services/interno.service';
 
 
 import { PedidosService } from 'src/app/services/pedidos.service';
@@ -33,15 +35,16 @@ export class HomeComponent implements OnInit {
   
   registerForm: any;
 
+  idUsuario='';
+  router: any;
 
-  constructor(private formBuilder: FormBuilder, private placesService: PedidosService, private userServices: UsuariosService) {
+  constructor(private formBuilder: FormBuilder, private placesService: PedidosService, private _ComandasApi: ComandasService, private _InternoService:InternoService) {
 
     this.registerForm = this.formBuilder.group(
       {
-        id: [""],  
+       
         mesa: [""],      
-        pedido:[""],
-        time: [serverTimestamp()],
+        pedido:[""],       
         edit:[false]
        
      
@@ -54,40 +57,40 @@ export class HomeComponent implements OnInit {
     let email = sessionStorage.getItem("email") as string;
     this.email = email;
 
-    /* this.userServices.getUser().subscribe(prod => {
-  
-      this.em = prod;     
-   
-      for (var i = 0; i < this.em.length; i++) {
-        
-        console.log(this.email)
-        if(this.em[i].email == email){
-          console.log(this.em[i].id)
-          sessionStorage.setItem("idUser", this.em[i].id);
-          this.user.id = this.em[i].id;
-          this.user.email = this.em[i].email;
-        }
-      
-      }
-      
-    }); */
-  
-    
+    this._InternoService.miUser$.subscribe(valor => {
 
-   
+      this.idUsuario = valor.id_usuario;
+    });
+
   }
 
- async onSumbit(){
+ async onSumbit():Promise<void>{
     console.log(this.registerForm.value);
-      /* this.pedido = this.wtsp + '&text='+ '*Mesa:*%0A' + this.registerForm.value.mesa + '%0A*Pedido:*%0A' + this.registerForm.value.pedido ;
      
-      window.location.href = this.pedido ;  */
     if(this.registerForm.value.mesa != "" && this.registerForm.value.pedido != ""){
 
-      const respnse = await this.placesService.addPedido(this.registerForm.value, this.user);
-      console.log(respnse);
+    
+        const data = {
+          id_usuario: this.idUsuario, 
+          mesa: this.registerForm.value.mesa,
+          contenido: this.registerForm.value.pedido,
+          estado: "FALSE"    
+        };
+        this._ComandasApi.postComanda(data).subscribe(
+          (response) => {
+            console.log('Usuario creado con éxito', response);
+            /* this.router.navigate(['/user']); */
+            this.ngOnInit();
+          },
+          (error) => {
+            console.error('Error al crear usuario', error);
+          }
+        );
+      
+
+ 
       this.onReset();
-      window.location.href = "/home" ;
+     /*  this.router.navigate(['/home']); */
     }
    
   }

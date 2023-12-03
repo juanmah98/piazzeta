@@ -6,6 +6,7 @@
           <div class="col-sm-6 col-12">
         <p class="fs-4 fw-bold text-center">Pedidos</p>
         <div class="row">
+          
        <!--  <div class="col-6 col-md-3 pb-3"*ngFor="let pediListo of pediListo" >
             <div class="card text-center" style="border-color: rgb(0, 202, 7); background-color: rgb(0, 202, 7);">
                 <p style="background-color: rgb(0, 177, 6);;" class="fw-bold text-light ">Mesa: {{pediListo.mesa}}</p>
@@ -164,7 +165,7 @@
             
            
             <div class="col-6 col-md-3 col-sm-4  pb-3"*ngFor="let pedido of pedi" >
-            <div data-bs-toggle="modal" data-bs-target="#exampleModal22" (click)="editForm(pedido)" class="card text-center shadow cocina" [ngClass]="{'edit': pedido.edit}">
+            <div data-bs-toggle="modal" data-bs-target="#exampleModal22" (click)="editForm(pedido)" class="card text-center shadow cocina" [ngClass]="{'edit': pedido.estado}">
                   <p class="fw-bold text-light p-3">Mesa {{pedido.mesa}}</p>
                  <!--  <p>{{time}}</p> -->
                  <!--  <button class="btn btn-dark" (click)="setInterval(pediListo.time)">time</button> -->

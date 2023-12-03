@@ -14,25 +14,15 @@ import { PedidosService } from 'src/app/services/pedidos.service';
 })
 export class CocinaComponent implements OnInit {
 
-  constructor(private pedidosServices: PedidosService, private _InternoService:InternoService, private _ComandaService:ComandasService) { }
+  constructor(private _InternoService:InternoService, private _ComandaService:ComandasService) { }
 
-  em:EmailStorage={
-    id: '',
-    email: ''
-  };
 
-  user: User = {   
-    id_usuario: "",
-    email: "",
-    clave: "" 
-  }
-
-  comanda: Comandas[] = [{   
+  comanda: Comandas[] = [/* {   
     id_comanda: "",
     contenido: "",
     mesa: "" ,
     estado:false
-  }]
+  } */]
 
 
 
@@ -40,42 +30,60 @@ export class CocinaComponent implements OnInit {
   email:string="";
   ngOnInit(): void {
 
-
-    this._ComandaService.getTableChanges().subscribe((data: any) => {
-      this.comanda = data;     
+/* 
+    this._ComandaService.getComanda().subscribe((data: Comandas[]) => {
+      let i=0;
       
+      data.forEach((element: Comandas) => {
+        if(element.estado==false){
+          this.comanda[i++] = element;
+        }
+      });
+      
+    }); */
+
+    this._ComandaService.getComanda().subscribe((data: Comandas[]) => {
+      // Filtra y agrupa las comandas según el estado
+      const comandasAgrupadas = this.filtrarPorEstado(data, false);
+  
+      // Puedes hacer lo que necesites con las comandas agrupadas
+      console.log('Comandas con estado false:', comandasAgrupadas[1]);
+  
+      // Asigna el resultado a this.comanda si es necesario
+      this.comanda = comandasAgrupadas[1];
     });
 
-  /*   this._InternoService.miUser$.subscribe(valor => {
-      this.user = valor;     
-          });
-    this.id = id;
-    this.email=log;
-    this.pedidosServices.getPedidos(id).subscribe(pedidos => {
-    
-      
-       this.pedi = pedidos.sort((a, b) => {
-        return a.time - b.time;
-      });
-     
+  }
 
-    
-      console.log("Pedido: ", this.pedi);
-     
-      
-    }) */
+  filtrarPorEstado(arr: Comandas[], estadoAFiltrar: boolean): Comandas[][] {
+    const filtradas = arr.filter(comanda => comanda.estado === estadoAFiltrar);
+    const agrupadas: Comandas[][] = [[], []];
+  
+    filtradas.forEach(comanda => {
+      if (comanda.estado === true) {
+        agrupadas[0].push(comanda);
+      } else {
+        agrupadas[1].push(comanda);
+      }
+    });
+  
+    return agrupadas;
   }
 
  async onClickDelete(pedido:Comandas){ 
-/*   this.user.id = this.id;
-  this.pedidosServices.addPedidoListo(pedido, this.user);
-  const response = await this.pedidosServices.deletePedido(pedido,this.id);
-  console.log(response); 
 
-  const data = {
-    email: this.email,
-    clave: this.registerForm.value.clave    
-  }; */
+  
+  const com: Comandas[] = this.comanda.map(element => {
+    if (element === pedido) {
+      // Si 'pedido' es igual a 'element', actualiza su estado
+      return { ...element, estado: true };
+    } else {
+      return element;
+    }
+  });
+  
+  // Filtra solo los elementos con estado igual a false
+  this.comanda = com.filter(element => element.estado === false);
 
 
    const someValue = pedido.id_comanda;
@@ -92,6 +100,7 @@ export class CocinaComponent implements OnInit {
           // Maneja el error de acuerdo a tus necesidades
         }
       );
+      this.ngOnInit();
 }  
 
 }

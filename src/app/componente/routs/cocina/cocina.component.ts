@@ -29,7 +29,7 @@ export class CocinaComponent implements OnInit {
   id:string ="";
   email:string="";
   ngOnInit(): void {
-
+ 
 /* 
     this._ComandaService.getComanda().subscribe((data: Comandas[]) => {
       let i=0;
@@ -54,6 +54,8 @@ export class CocinaComponent implements OnInit {
     });
 
   }
+
+
 
   filtrarPorEstado(arr: Comandas[], estadoAFiltrar: boolean): Comandas[][] {
     const filtradas = arr.filter(comanda => comanda.estado === estadoAFiltrar);

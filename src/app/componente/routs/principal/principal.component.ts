@@ -23,6 +23,7 @@ export class PrincipalComponent implements OnInit {
 
   caja(){
     this.router.navigate(['/caja']);
+    /* document.location.href = "/principal"  */
   }
 
 

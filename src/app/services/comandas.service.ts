@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, Observable, Subject, interval, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, interval, switchMap, takeUntil } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { createClient, SupabaseClient, Subscription, User } from '@supabase/supabase-js';
 import { Router } from '@angular/router'
@@ -17,7 +17,7 @@ export class ComandasService {
   
   private comandaSubject = new Subject<any>();
   private _currentUser: BehaviorSubject<boolean | User | any> = new BehaviorSubject(null)
-
+  private destroy$ = new Subject<void>();
 
   constructor(private http: HttpClient) {
     
@@ -25,13 +25,17 @@ export class ComandasService {
 
   getComanda(): Observable<any> {
     const headers = this.getHeaders();
-
-    // Intervalo de tiempo para la solicitud periódica (por ejemplo, cada 5 segundos)
     const pollingInterval = 500; // en milisegundos
 
     return interval(pollingInterval).pipe(
+      takeUntil(this.destroy$),
       switchMap(() => this.http.get(this.apiUrl, { headers }))
     );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   postComanda(data: any): Observable<any> {

@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 export class UsuariosService {
   
 
-  private apiUrl = 'https://qesyeoifdwtcehlbwmfw.supabase.co/rest/v1/usuarios';
+  private apiUrl = 'https://rwttebejxwncpurszzld.supabase.co/rest/v1/usuarios';
   private apiKey = environment.supabaseKey; // Reemplaza con tu API key
   private apiKeyUser = environment.userkey; // Reemplaza con tu API key
 
